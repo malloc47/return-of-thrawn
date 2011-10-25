@@ -1,0 +1,216 @@
+# Jedi Knight Cog Script
+#
+# This cog handles the cutscene in the introduction.
+# It was designed by Jarrell Waggoner for the Return of thrawn level
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      entered                                                          
+sector       trigger                                                          
+thing        camera1                                                          
+thing        camera2                                                          
+thing	     camera3
+thing        player				local                                                           
+thing        ghosttel1                                                        
+thing        ghosttel2                                                        
+thing		rbcghost
+thing		rbc				local
+template	rbctemp
+thing		kyle				local
+template	kyletemp
+thing		kyleghost	
+
+int          done=0                             local                         
+flex	     speed
+#sound	     theme
+end                                                                           
+
+# ========================================================================================
+
+code
+entered:
+	If(done==1) Return;	
+	done=1;
+	player = GetLocalPlayerThing();
+
+	// freeze Kyle
+	SetActorFlags(player, 0xa00000);
+	StopThing(player);
+
+	// make Kyle invul and invisible
+	SetActorFlags(player, 0x8);
+        SetThingCurGeoMode(player, 0);
+
+	//Get camera ready for cutscene
+	SetCameraFocus(0, camera3);
+	SetCurrentCamera(0);	
+
+	rbc = CreateThing(rbctemp, rbcghost);
+	CaptureThing(rbc);
+	AISetMode(rbc, 0x2000);
+
+	kyle = CreateThing(kyletemp, kyleghost);
+	CaptureThing(kyle);
+	AISetMode(kyle, 0x2000);
+
+	//Get the player outa here
+	TeleportThing(player, ghosttel1);
+#	PlaySoundLocal(theme, 1, 0, 0);
+	movetoframe(camera3, 1, speed);
+	WaitForStop(camera3);
+	Sleep(2.0); 
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);	
+	Sleep(1.0);
+//	Print("Hello, Kyle.");
+	jkPrintUNIString(-1, 1072);
+	Sleep(2.5);
+//	Print("Nice to see you again.");
+	jkPrintUNIString(-1, 1073);
+	Sleep(2.5);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);	
+	Sleep(2.5);
+//	Print("Hi, Commander.");
+	jkPrintUNIString(-1, 1074);
+	Sleep(2.5);
+//	Print("What have you summoned me here for?");
+	jkPrintUNIString(-1, 1075);
+	Sleep(2.5);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);	
+	Sleep(0.5);
+//	Print("I have a mission for you of great importance.");
+	jkPrintUNIString(-1, 1076);
+	Sleep(2.5);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);	
+//	Print("You must mean the Deneb War.");
+	jkPrintUNIString(-1, 1077);
+	Sleep(2.5);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);	
+	Sleep(0.5);
+//	Print("No, what I am speaking of is not very well known.");
+	jkPrintUNIString(-1, 1078);
+	Sleep(2.5);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);	
+	Sleep(0.5);
+//	Print("Well, go on.");
+	jkPrintUNIString(-1, 1079);
+	Sleep(2.5);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);	
+//	Print("Eight days ago we intercepted a cargo ship...");
+	jkPrintUNIString(-1, 1080);
+	Sleep(2.5);
+//	Print("..which was transporting supplies for the Deneb War."); 
+	jkPrintUNIString(-1, 1081);
+	Sleep(3.5);
+//	Print("We captured the ship and looked through the computer data banks.");
+	jkPrintUNIString(-1, 1082);
+	Sleep(3.5);
+//	Print("We found some information on a secret empirial project..");
+	jkPrintUNIString(-1, 1083);
+	Sleep(2.0);
+//	Print("...that was going on at the time of the second Death Star.");
+	jkPrintUNIString(-1, 1084);
+	Sleep(4.0);
+//	Print("While the Second Death Star was being constructed..."); 
+	jkPrintUNIString(-1, 1085);
+	Sleep(3.0);
+//	Print("...the empire was secretly engineering a cloning device.");
+	jkPrintUNIString(-1, 1086);
+	Sleep(4.0);
+//	Print("The cloning device was intended only as a last resort..");
+	jkPrintUNIString(-1, 1087);
+	Sleep(2.5);	
+//	Print("..because it could be used to make thousands of troops.");
+	jkPrintUNIString(-1, 1088);
+	Sleep(4.0);
+//	Print("The cloning device was put on the Second Death Star and was...");
+	jkPrintUNIString(-1, 1089);
+	Sleep(2.5);
+//	Print("...destroyed with it");
+	jkPrintUNIString(-1, 1090);
+	Sleep(4.0);
+//	Print("Before it was destroyed, the Empire tested it on none other...");
+	jkPrintUNIString(-1, 1091);
+	Sleep(2.5);
+//	Print("..than Grand Admiral Thrawn himself.");
+	jkPrintUNIString(-1, 1092);
+	Sleep(4.0);
+//	Print("Admiral Thrawn's clone was put in suspended animation...");
+	jkPrintUNIString(-1, 1093);
+	Sleep(2.5);
+//	Print("...and now he has been brought out of suspended animation.");
+	jkPrintUNIString(-1, 1094);
+	Sleep(4.0);
+//	Print("He is now starting to reinvent the cloning device.");
+	jkPrintUNIString(-1, 1095);
+	Sleep(4.0);
+//	Print("He is the only one who knows how it is made");
+	jkPrintUNIString(-1, 1096);
+	Sleep(2.0);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);	
+	Sleep(2.0);
+//	Print("And you need me to get rid of him, right?");
+	jkPrintUNIString(-1, 1097);
+	Sleep(2.0);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);	
+	Sleep(2.0);
+//	Print("Yes");
+	jkPrintUNIString(-1, 1098);
+	Sleep(2.0);
+//	Print("He is on a star destroyer in the Beta-Arion quadrant");
+	jkPrintUNIString(-1, 1099);
+	Sleep(3.5);
+//	Print("This particular Star Destroyer is an older model...");
+	jkPrintUNIString(-1, 1100);
+	Sleep(2.0);
+//	Print("...,you may remember it from your days with the Empire.");
+	jkPrintUNIString(-1, 1101);
+	Sleep(4.0);
+//	Print("It's name is the Centaur.");
+	jkPrintUNIString(-1, 1102);
+	Sleep(3.5);
+//	Print("The Centaur is undergoing its routine ion sweep...");
+	jkPrintUNIString(-1, 1103);
+	Sleep(2.0);
+//	Print("...so Thrawn has been moved from his quarters to the ballroom");
+	jkPrintUNIString(-1, 1104);
+	Sleep(4.0);
+//	Print("Do you accept the mission?");
+	jkPrintUNIString(-1, 1105);
+	Sleep(2.0);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);	
+	Sleep(2.0);
+//	Print("Sure");
+	jkPrintUNIString(-1, 1106);
+	Sleep(2.0);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);	
+	Sleep(2.0);
+//	Print("Good luck, Kyle.");
+	jkPrintUNIString(-1, 1107);
+	Sleep(4.0);
+       SetThingCurGeoMode(player, GetThingGeoMode(player));
+       jkClearFlags(player, 0x20);	
+	ClearActorFlags(player, 0xa00000);
+ 	//set view back to real kyle
+	SetCameraFocus(0, player);
+	if (jkGetSaberCam() == 1) CycleCamera();
+	done=0;
+	DestroyThing(kyle);
+	DestroyThing(rbc);
+	TeleportThing(player, ghosttel2);
+
+Return;
+end
+
+

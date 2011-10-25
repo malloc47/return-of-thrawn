@@ -1,0 +1,38 @@
+# Jedi Knight Cog Script
+#
+# 00_BREAKINGGLASS.COG
+#
+# Generic breaking glass script to be linked to both sides
+# of a breakable glass pane.
+#
+# Note: the template used is shard00, NOT shard0 !
+#
+# [YB]
+# Edited by Jarrell Waggoner for the Return of Thrawn Level
+# Changed to be used by a switch
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+
+symbols
+surface		switch1			mask=0x448	desc=glass
+surface		switchback1		mask=0x448	desc=glass_adjoin
+thing		soundscource
+sound		breaksound
+message		damaged
+message		activated
+end
+
+code
+damaged:
+	PlaySoundThing(breaksound,soundscource , 1.0, -1, 300.0, 0x0);
+	SetFaceGeoMode(switch1, 0);		// GEOMETRY_NONE
+	SetFaceGeoMode(switchback1, 0);
+	SetAdjoinFlags(switch1, 2);		// Set ADJOIN_MOVE  (allow passage)
+	SetAdjoinFlags(switchback1, 2);
+
+	Return;
+actavated:
+	Print("There is something weird about this switch");
+Return;
+end
+
+

@@ -1,0 +1,235 @@
+# Jedi Knight Cog Script
+#
+# thrawn_timer.cog
+#
+# This is the master timer cog for the Return of Thrawn.
+# When the countdown gets to zero, the level ends.
+#
+# [IS/JS]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved		
+# ========================================================================================
+
+
+symbols
+
+message      startup                                                          
+message      pulse                                                            
+message      activate                                                         
+message      timer                                                            
+message      entered                                                          
+message      crossed                                                          
+
+sound        switch                                                           
+sound        wav28                                                            
+sound        wav29                                                            
+sound        wav30                                                            
+
+int          time=150                                                         
+
+surface      start                                           
+surface      switch1                                    
+surface      switch2   
+surface	     ajoin1				
+
+thing        doorc1                                                           
+thing        doorc2                                                           
+thing        dooro1                                                           
+thing        dooro2                                                           
+thing        doorn1                                                           
+
+sector       closedoor                                                        
+
+int          switch1stat=0                      local                         
+int          switch2stat=0                      local                         
+int          startdone=0                        local                         
+int          switch1done=0                      local                         
+int          switch2done=0                      local                         
+int          closedoor=0                        local                         
+int          nocount=0                          local                         
+int	     noopen=0				local	
+
+float        volume=1.5                                                       
+float        speed=40.0                         desc=movement_speed           
+float        distance                           local                         
+
+
+end                                                                           
+
+# ========================================================================================
+
+code
+startup:
+	if (GetDifficulty() == 0) time=100;
+	if (GetDifficulty() == 1) time=45;
+	if (GetDifficulty() == 2) time=30;
+	Return;
+# .................................................................................
+
+pulse:
+	time = time - 1;
+	if(nocount==1) Return;
+
+	if (time == 0) {        // time's up.  end the level
+		blindingEffectHandle = newColorEffect(0, 0, 0, 0, 0, 0, 232, 250, 232, 1.0);
+		PlaySoundLocal(wav28, 1.5, 0.0, 0);
+		PlaySoundLocal(wav29, 1.5, 0.0, 0);
+		PlaySoundLocal(wav30, 1.5, 0.0, 0);
+		SetTimer(1.0);
+		return;
+	}
+
+	if (time == 360) Print("Star Destroyer will self destruct in 6.30 minutes");
+	else
+	if (time == 330) Print("Star Destroyer will self destruct in 6.00 minutes");
+	else
+	if (time == 300) Print("Star Destroyer will self destruct in 5.30 minutes");
+	else
+	if (time == 270) Print("Star Destroyer will self destruct in 5.00 minutes");
+	else
+	if (time == 240) Print("Star Destroyer will self destruct in 4.30 minutes");
+	else
+	if (time == 210) Print("Star Destroyer will self destruct in 4.00 minutes");
+	else
+	if (time == 180) Print("Star Destroyer will self destruct in 3.30 minutes");
+	else
+	if (time == 150) Print("Star Destroyer will self destruct in 3.00 minutes");
+	else
+	if (time == 120) Print("Star Destroyer will self destruct in 2.30 minutes");
+	else
+	if (time == 90) Print("Star Destroyer will self destruct in 2.00 minutes");
+	else
+	if (time == 60) Print("Star Destroyer will self destruct in 1.00 minute");
+	else
+	if (time == 30) Print("Star Destroyer will self destruct in 0.30 minutes");
+	else
+	if (time == 10) Print("Star Destroyer will self destruct in 0.10 minutes");
+	else
+	if (time == 9) Print("Star Destroyer will self destruct in 0.09 minutes");
+	else
+	if (time == 8) Print("Star Destroyer will self destruct in 0.08 minutes");
+	else
+	if (time == 7) Print("Star Destroyer will self destruct in 0.07 minutes");
+	else
+	if (time == 6) Print("Star Destroyer will self destruct in 0.06 minutes");
+	else
+	if (time == 5) Print("Star Destroyer will self destruct in 0.05 minutes");
+	else
+	if (time == 4) Print("Star Destroyer will self destruct in 0.04 minutes");
+	else
+	if (time == 3) Print("Star Destroyer will self destruct in 0.03 minutes");
+	else
+	if (time == 2) Print("Star Destroyer will self destruct in 0.02 minutes");
+	else
+	if (time == 1)
+		Print("Star Destroyer will self destruct in 0.01 minutes");
+	return;
+
+# .................................................................................
+
+activate:
+
+	if (GetSenderRef() == start)
+	{	
+	if ((switch1stat == 1)&&(switch2stat == 1))
+		{
+		if(startdone==1) Return;
+		SetWallCel(start, 1);	
+		Sleep(1.0);
+		Print("Self destruct sequence initiated");
+		SetPulse(1.0);
+		movetoframe(doorc1, 1, 10);
+		movetoframe(doorc2, 1, 10);
+		startdone=1;
+		switch1done=1;
+		switch2done=1;
+		closedoor=1;
+
+		Return;
+		}
+		
+		else
+		{
+		Print("Secondary switches must be actavated");
+		Print("for self destruct to function.");
+		Return;		
+		}
+	}
+
+	if (GetSenderRef() == switch1)
+	{ 
+       if(switch1done==1) Return;
+ 
+       if(switch1stat==0)
+		{
+		Print("Self Destruct Sequence One Activated");
+      		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch1, 1);
+		switch1stat=1;
+		Return;
+		}  
+
+       if(switch1stat==1)
+		{
+		Print("Self Destruct Sequence One Deactivated");
+      		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch1, 0);
+		switch1stat=0;
+		Return;
+		}
+	}
+
+	if (GetSenderRef() == switch2)
+	{ 
+       if(switch2done==1) Return;
+ 
+       if(switch2stat==0)
+		{
+		Print("Self Destruct Sequence Two Activated");
+      		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch2, 1);
+		switch2stat=1;
+		Return;
+		}  
+
+       if(switch2stat==1)
+		{
+		Print("Self Destruct Sequence Two Deactivated");  
+    		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch2, 0);
+		switch2stat=0;
+		Return;
+		}
+		else
+		{
+		Return;
+		}
+	}
+	return;
+
+
+	return;
+
+# .................................................................................
+entered:
+if(closedoor==1) Return;
+if(noopen==1) Return;
+noopen=1;
+movetoframe(dooro1, 1, 10);
+movetoframe(dooro2, 1, 10);
+Sleep(1.0);
+movetoframe(doorn1, 1, 10);
+Return;
+        
+
+crossed:
+nocount=1;
+SetPulse(1.0);
+Return;
+
+timer:
+	jkEndLevel(0);
+	return;
+	
+end
+

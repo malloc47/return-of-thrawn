@@ -1,0 +1,344 @@
+# Jedi Knight Cog Script
+#
+# 
+# This cog handles the Force Field shutdown sequence It was designed by Jarrell Waggoner for the Return of thrawn level
+# This Cog is Not supported by LucasArts Entertainment Co
+#
+
+symbols
+message      startup                                                          
+message      activated                                                        
+message      pulse                                                            
+
+surface      switch1                                                          
+surface      switch2                                                          
+surface      switch3                                                          
+surface      switch4                                                          
+surface      switch5                                                          
+surface      switch6                                                          
+
+surface      meter1
+surface      meter2
+
+int          switch1stat=0                      local                         
+int          switch2stat=0                      local                         
+int          switch3stat=0                      local                         
+int          switch4stat=0                      local                         
+int          switch5stat=0                      local                         
+
+int          done=0 	                        local                         
+
+int          halfpower=0                        local                         
+int	     quarterpower=0			local
+thing	     door
+#-------------------Pulse Stuff taken from 18_hienergy.cog--------------------------------
+template     water=+upenergyhi                                                
+
+float        pulserate=0.25
+
+thing        ghost0                             linkid=-1                     
+thing        ghost1                             linkid=-1                     
+thing        ghost2                             linkid=-1                     
+
+int          dummy                              local                         
+int          dummy1                             local                         
+int          dummy2                             local                         
+int          dummy3                             local                         
+int          dummy4                             local                         
+int          dummy5                             local                         
+int          dummy6                             local                         
+int          dummy7                             local                         
+int          dummy8                             local                         	
+#---------------------------------------------------------------
+sound	     switch
+sound	     tog
+
+end                                                                           
+# ========================================================================================
+
+code
+startup:
+	SetWallCel(switch1, 1);
+	SetWallCel(switch2, 1);
+        SetPulse(pulserate);
+	Return;
+
+activated:
+#------------------------SWITCH 1----------------------------------
+if (GetSenderRef() == switch1)
+	{
+
+ 
+       if(switch1stat==0)
+		{
+      		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch1, 0);
+		switch1stat=1;
+		Return;
+		}  
+
+       if(switch1stat==1)
+		{
+      		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch1, 1);
+		switch1stat=0;
+		Return;
+		}
+	Return;
+	}
+
+#------------------------SWITCH 2----------------------------------
+if (GetSenderRef() == switch2)
+	{
+
+
+        if(switch2stat==0)
+		{
+      		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch2, 0);
+		switch2stat=1;
+		Return;
+		}  
+
+       if(switch2stat==1)
+		{
+      		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch2, 1);
+		switch2stat=0;
+		Return;
+		}
+	Return;
+	}
+
+#------------------------SWITCH 6 POWER TOGGLE----------------------------------
+
+if (GetSenderRef() == switch6)
+	{
+
+	if ((switch1stat == 1)&&(switch2stat == 1))
+		{
+		if (done==1) Return;
+		SetWallCel(switch6, 1);
+      		PlaySoundLocal(tog, 0, 0);
+//		switch6done=1;
+//		switch1done=1;
+//		switch2done=1;
+		halfpower=1;
+		quarterpower=0;
+//		Sleep(1.5);
+		SetWallCel(meter1, 2);
+		SetWallCel(meter2, 2);
+		SetPulse(0.30);
+//		Sleep(1.0);
+//		Print("Force field generator running at half power");
+		jkPrintUNIString(-1, 1045);
+		SetWallCel(switch6, 0);
+		Return;
+
+		}  
+	if ((switch1stat == 0)&&(switch2stat == 1))
+		{
+		if (done==1) Return;
+		SetWallCel(switch6, 1);
+      		PlaySoundLocal(tog, 0, 0);
+//		switch6done=1;
+//		switch1done=1;
+//		switch2done=1;
+		halfpower=0;
+		quarterpower=1;
+//		Sleep(1.5);
+		SetWallCel(meter1, 1);
+		SetWallCel(meter2, 1);
+		SetPulse(0.50);
+//		Sleep(1.0);
+//		Print("Force field generator running at three quarters power");
+		jkPrintUNIString(-1, 1046);
+		SetWallCel(switch6, 0);
+		Return;
+		}
+
+	if ((switch1stat == 1)&&(switch2stat == 0))
+		{
+		if (done==1) Return;
+		SetWallCel(switch6, 1);
+      		PlaySoundLocal(tog, 0, 0);
+//		switch6done=1;
+//		switch1done=1;
+//		switch2done=1;
+		halfpower=0;
+		quarterpower=1;
+//		Sleep(1.5);
+		SetWallCel(meter1, 1);
+		SetWallCel(meter2, 1);
+//		Sleep(1.0);
+//		Print("Force field generator running at three quarters power");
+		jkPrintUNIString(-1, 1046);
+		SetWallCel(switch6, 0);
+		SetPulse(0.50);
+		Return;
+		}
+
+	if ((switch1stat == 0)&&(switch2stat == 0))
+		{
+		if (done==1) Return;
+//		Print("Force field generator running at full power");
+		jkPrintUNIString(-1, 1047);
+	      	PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch1, 1);
+		SetWallCel(switch2, 1);
+		SetWallCel(switch3, 0);
+		SetWallCel(switch4, 0);
+		SetWallCel(switch5, 0);
+		SetWallCel(switch6, 0);
+		SetWallCel(meter1, 0);
+		SetWallCel(meter2, 0);
+		SetPulse(PulseRate);
+		switch1stat=0;
+		switch2stat=0;
+		switch3stat=0;
+		switch4stat=0;
+		switch5stat=0;
+		halfpower=0;
+		quarterpower=0;
+//		Sleep(2.0);
+		Return;
+		}
+	Return;
+	}
+
+#----------------------------SWITCH 3---------------------------------
+if (GetSenderRef() == switch3)
+	{
+
+
+       if(switch3stat==0)
+		{
+      		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch3, 1);
+		switch3stat=1;
+		Return;
+		}  
+
+       if(switch3stat==1)
+		{
+      		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch3, 0);
+		switch3stat=0;
+		Return;
+		}
+	Return;
+	}
+
+#----------------------------SWITCH 4 BAD SWITCH---------------------------------
+if (GetSenderRef() == switch4)
+	{
+
+
+       if(switch4stat==0)
+		{
+      		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch4, 1);
+		switch4stat=1;
+		Return;
+		}  
+
+       if(switch4stat==1)
+		{
+      		PlaySoundLocal(switch, 1, 0, 0);
+		SetWallCel(switch4, 0);
+		switch4stat=0;
+		Return;
+		}
+	Return;
+	}
+
+#-----------------SWITCH 5 DEACTAVATE IF SWITCH 4 NOT ACTIVE AND QUARTER POWER---------------------------------
+if (GetSenderRef() == switch5)
+	{
+	if (done==1) Return;
+	if (switch3stat==0) Return;
+
+	if (switch4stat==0)
+	{
+	if (halfpower==1) Return;
+	done=1;
+      	PlaySoundLocal(switch, 1, 0, 0);
+	switch5done=1;
+	SetWallCel(switch5, 1);
+	Sleep(1.5);
+	SetWallCel(meter1, 4);
+	SetWallCel(meter2, 4);
+        SetPulse(0.0);
+	Sleep(1.0);
+	SetWallCel(switch5, 1);
+//	Print("Primary Force Field Off-Line");
+	jkPrintUNIString(-1, 1048);
+	MoveToFrame(door, 1, 10);
+	SendMessageEx(GetMasterCOG(), user0, 4, 0, 0, 0);
+	jkPrintUNIString(-1, 1071);
+	Return;
+	}
+
+	if (switch4stat==1)
+	{
+      	PlaySoundLocal(switch, 1, 0, 0);
+	SetWallCel(switch5, 1);
+	SetWallCel(switch1, 1);
+	SetWallCel(switch2, 1);
+	SetWallCel(switch3, 0);
+	SetWallCel(switch4, 0);
+	SetWallCel(switch6, 0);
+	SetPulse(PulseRate);
+	SetWallCel(meter1, 0);
+	SetWallCel(meter2, 0);
+	switch1stat=0;
+	switch2stat=0;
+	switch3stat=0;
+	switch4stat=0;
+	switch5stat=0;
+	halfpower=0;
+	quarterpower=0;
+//	Sleep(2.0);
+	SetWallCel(switch5, 0);
+//	Print("Hmm.. I think I reset it.");
+	jkPrintUNIString(-1, 1049);
+	Return;
+	}
+	Return;
+	}
+Return;
+
+pulse:
+   if (halfpower==1)
+   {
+   dummy = CreateThing(water, ghost0);
+   Return;
+   }
+
+   if (quarterpower==1)
+   {
+   dummy = CreateThing(water, ghost0);
+   dummy1 = CreateThing(water, ghost0);
+   dummy2 = CreateThing(water, ghost0);
+   dummy3 = CreateThing(water, ghost0);
+   dummy4 = CreateThing(water, ghost0);
+   Return;
+   }
+   else
+   {
+   dummy = CreateThing(water, ghost0);
+   dummy1 = CreateThing(water, ghost0);
+   dummy2 = CreateThing(water, ghost0);
+   dummy3 = CreateThing(water, ghost0);
+   dummy4 = CreateThing(water, ghost0);
+   dummy5 = CreateThing(water, ghost0);
+   dummy6 = CreateThing(water, ghost0);
+   dummy7 = CreateThing(water, ghost0);
+   dummy8 = CreateThing(water, ghost0);
+   Return;
+   }
+   Return;
+
+end
+
+

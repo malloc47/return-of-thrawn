@@ -1,0 +1,136 @@
+# Troop_puz_cut.cog
+# Jarrell Waggoner
+# 
+# Jedi Knight Cog Script
+# 
+# This cog controls the puzzle of getting past the Advanced troopers
+# Created for The Return of Thrawn level
+#
+symbols
+thing 	   	camera1			     desc=camera_ghost
+thing       	camera2                      desc=camera_ghost2
+thing		camera3
+thing		ghosttel
+thing		kyle			     desc=kyle_katarn
+thing		atroop1
+thing		atroop2
+thing		atroop3
+thing		atroop4
+thing		atroop5
+thing		atroop6
+thing		atroop7
+thing		atroop8
+thing		atroop9
+thing		atroop10
+ai		good_ai
+ai		bad_ai
+message 	entered
+message		crossed		
+message		damaged 
+sector	        trigger
+surface		adjoin0
+int		status=0			    local
+int		complete=0			    local
+thing		player              		    local
+thing    	playermodel         		    local
+model    	troop=kyM13.3do    		    local
+model    	oldModel             		    local
+int		destroyclothes=0		    local
+end
+
+code
+
+entered:
+While(status==0)	
+{
+	SetActorFlags(jkGetLocalPlayer(), 0xa00000);	
+	SetMusicVol(0.1);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);
+	AIClearMode(kyle, 0x606);
+	AIClearMode(troop1, 0x606);
+	AISetMoveSpeed(kyle, 2.0);
+	Sleep(0.5);
+	AISetLookFrame(kyle, 1);
+	AISetMoveFrame(kyle, 1);
+	Sleep(2.5);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);
+	AISetLookFrame(kyle, 2);
+	Sleep(2.5);
+	player = GetSourceRef();
+	playermodel = jkGetLocalPlayer();
+	oldModel = SetThingModel(playermodel, troop);
+	Sleep(1.5);
+	Print("These cloths could come in handy.");
+	Sleep(1.0);
+	Print("I think I will put them on");
+	TeleportThing(player, ghosttel);
+	Sleep(2.0);
+	SetMusicVol(1.0);
+	SetCameraFocus(0, jkGetLocalPlayer());
+	if (jkGetSaberCam() == 1) CycleCamera();
+	ClearActorFlags(jkGetLocalPlayer(), 0xa00000);
+	SetActorFlags(player, 0x80);
+	AISetClass(atroop1, good_ai);		
+	AISetClass(atroop2, good_ai);
+	AISetClass(atroop3, good_ai);	
+	AISetClass(atroop4, good_ai);
+	AISetClass(atroop5, good_ai);	
+	AISetClass(atroop6, good_ai);	
+	AISetClass(atroop7, good_ai);
+	AISetClass(atroop8, good_ai);
+	AISetClass(atroop9, good_ai);
+	AISetClass(atroop10, good_ai);	
+	status=1;
+}
+	Return;
+crossed:
+If(complete==1) Return;
+{
+	SetActorFlags(jkGetLocalPlayer(), 0xa00000);
+	StopThing(player);
+        SetThingCurGeoMode(player, 0);
+	SetCameraFocus(0, camera3);
+	SetCurrentCamera(0);
+	Sleep(1.0);
+	Print("I think I will take these cloths off now");
+	SetThingModel(playermodel, oldModel);
+	ClearActorFlags(player, 0x80);
+	AISetClass(atroop1, bad_ai);		
+	AISetClass(atroop2, bad_ai);
+	AISetClass(atroop3, bad_ai);	
+	AISetClass(atroop4, bad_ai);
+	AISetClass(atroop5, bad_ai);	
+	AISetClass(atroop6, bad_ai);	
+	AISetClass(atroop7, bad_ai);
+	AISetClass(atroop8, bad_ai);
+	AISetClass(atroop9, bad_ai);
+	AISetClass(atroop10, bad_ai);
+	Sleep(2.0);
+	ClearActorFlags(jkGetLocalPlayer(), 0xa00000);
+        SetThingCurGeoMode(player, 4);
+	SetCameraFocus(0, jkGetLocalPlayer());
+	if (jkGetSaberCam() == 1) CycleCamera();
+	complete=1;
+}
+Return;
+
+damaged:
+{
+	ClearActorFlags(player, 0x80);
+	AISetClass(atroop1, bad_ai);		
+	AISetClass(atroop2, bad_ai);
+	AISetClass(atroop3, bad_ai);	
+	AISetClass(atroop4, bad_ai);
+	AISetClass(atroop5, bad_ai);	
+	AISetClass(atroop6, bad_ai);	
+	AISetClass(atroop7, bad_ai);
+	AISetClass(atroop8, bad_ai);
+	AISetClass(atroop9, bad_ai);
+	AISetClass(atroop10, bad_ai);
+}
+Return;
+
+end
+

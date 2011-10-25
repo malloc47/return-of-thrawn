@@ -1,0 +1,218 @@
+# Jedi Knight Cog Script
+#
+# Thrawn_explodewall.COG
+#
+# This cog will make the wall explode after you kill thrawn 
+#
+# It was designed by Jarrell Waggoner for the Return of Thrawn level.
+#
+
+
+symbols
+
+message      killed                                                           
+message      startup                                                          
+message      pulse
+
+surface      front                              mask=0xfff                    
+surface      back                                                             
+
+sound        blastsound                                                       
+sound        railshoot                                                        
+sound        explosion                                                        
+
+thing        player                             local                         
+thing        thrawn                                                           
+thing        thrawn2                            local                         
+thing	     thrawn3				local
+thing        thrawndummyg                                                     
+thing	     thrawndummy3
+thing        kyledummy                          local                         
+thing        kyledummyg                                                       
+thing        ghost0                                                           
+thing        ghost1                                                           
+thing        ghost2                                                           
+thing        ghost3                                                           
+thing        escape                                                           
+thing	     escape2				local
+thing        boom                                                             
+thing        camera1                                                          
+thing        camera2                                                          
+thing        shootghost2                                                          
+thing        camera1b                                                         
+thing        shootghost                                                       
+thing        reed                                                             
+thing        brian                                                            
+thing        brandon                                                          
+
+template     explosion_tpl=+03_exp              local                         
+template     thrawndummytpl                                                   
+template     kyledummytpl                                                     
+template     phasertpl                                                        
+template     blowup                                                           
+template     railtpl
+int          done=0                             local                         
+
+flex         autoAimXFOV=360                    local                         
+flex         autoAimZFOV=360                    local                         
+flex         cam2speed=30                                                     
+end                                                                           
+
+
+code
+startup:
+       player = GetLocalPlayerThing();
+//	escape2 = GetThingPos(escape);
+	AISetMode(reed, 0x2000);
+	AISetMode(brian, 0x2000);
+	AISetMode(brandon, 0x2000);
+	Return; 
+killed:
+	If(done==1) Return;	
+	done=1;
+	player = GetLocalPlayerThing();
+	//AISetMode(thrawn, 0x2000);
+	DestroyThing(thrawn);
+
+	// freeze Kyle
+	SetActorFlags(player, 0xa00000);
+	StopThing(player);
+
+	// make Kyle invul and invisible
+	SetActorFlags(player, 0x8);
+        SetThingCurGeoMode(player, 0);
+
+	//Get camera ready for cutscene
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);	
+
+	//Create a new thrawn
+	thrawn2 = CreateThing(thrawndummytpl, thrawndummyg);
+	CaptureThing(thrawn2);
+	AISetMode(thrawn2, 0x2000);
+
+
+	//Create a new dummy kyle
+	kyledummy = CreateThing(kyledummytpl, kyledummyg);
+	CaptureThing(kyledummy);
+	AISetMode(kyledummy, 0x2000);
+
+//	AISetMoveSpeed(thrawn2, 1.0);
+//	AISetLookPos(thrawn2, GetThingPos(kyledummy));
+
+	//start the camera moving -slowly
+	MoveToFrame(camera1, 1, 0.1);	
+
+	Sleep(2.0);
+//	Print("Kyle, you will not get away with this.");
+        jkPrintUNIString(-1, 1117);
+	Sleep(2.0);
+//	Print("You may kill me but you will die");
+        jkPrintUNIString(-1, 1118);
+	Sleep(2.0);
+
+	//shoot kyle
+	FireProjectile(shootghost, phasertpl, blastsound,  24, '0 0 0', '0 0 0', 1.0, 0x60, autoAimXFOV, autoaimZFOV);
+
+	Sleep(0.2);
+//	Print("Arrrg! My Arm!");
+        jkPrintUNIString(-1, 1119);
+
+	//Cut off fake kyle's arm
+	AmputateJoint(kyledummy, 6);
+
+	//Cut off real player's arm
+	AmputateJoint(player, 6);
+
+//	SetCameraFocus(0, camera1b);
+//	SetCurrentCamera(0);	
+	Sleep(1.5);
+//	AISetMoveSpeed(thrawn2, 2.0);
+//	AISetLookFrame(thrawn2, 1);
+//	AISetMoveFrame(thrawn2, 1);
+//        DestroyThing(thrawn2);
+
+	//Create a new thrawn
+//	thrawn3 = CreateThing(thrawndummytpl, thrawndummy3);
+//	CaptureThing(thrawn3);
+//	AISetMode(thrawn3, 0x2000);
+
+	//Make Thrawn try to escape
+//	Sleep(1.0);
+//	AISetMoveSpeed(thrawn2, 2);
+//	AiSetLookPos(thrawn2, escape2);
+//	AISetMovePos(thrawn2, escape2);
+
+	//Make him take one last look at kyle -Bad mistake for thrawn
+//	Sleep(1.5);
+//	AISetLookPos(thrawn3, GetThingPos(kyledummy));
+
+	Sleep(2.0);
+	FireProjectile(shootghost2, railtpl, railshoot,  24, '0 0 0', '0 0 0', 1.0, 0x60, autoAimXFOV, autoaimZFOV);
+//	SetCameraFocus(0, camera1b);
+//	SetCurrentCamera(0);	
+
+	//Make rail sound
+//	PlaySoundLocal(railshoot, 1.0, 0.0, 0);
+//	Sleep(GetSoundLen(railshoot));
+//	Sleep(0.5);
+	
+//	SetCameraFocus(0, camera2);
+//	SetCurrentCamera(0);	
+//	MoveToFrame(camera2, 1, cam2speed);
+//	WaitForStop(camera2); 
+//	PlaySoundLocal(explosion, 1.0, 0.0, 0);
+	CreateThing(blowup, boom);
+	Sleep(0.015);
+	CreateThing(blowup, boom);
+	DestroyThing(thrawn2);
+	Sleep(2.0);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);	
+	Sleep(1.0);
+//	Print("That takes care of Thrawn...");
+        jkPrintUNIString(-1, 1120);
+	Sleep(2.0);
+//	Print("Now I have to find a way out of here");
+        jkPrintUNIString(-1, 1121);
+	Sleep(2.0);
+//	Print("Oh.. by the way, I could use some medication");
+        jkPrintUNIString(-1, 1122);
+	Sleep(2.0);
+	//clean up after cutscene
+        SetThingCurGeoMode(player, GetThingGeoMode(player));
+	ClearActorFlags(player, 0xa00000);
+	// make Kyle vulnerable
+	ClearActorFlags(player, 0x8);
+	DestroyThing(kyledummy);
+	SetPulse(0.5);
+ 	//set view back to real kyle
+	SetCameraFocus(0, player);
+	if (jkGetSaberCam() == 1) CycleCamera();
+ 
+       Sleep(4.0);
+       setwallcel(front,1);
+       setwallcel(back,1);
+       setadjoinflags(front,2);
+       setadjoinflags(back,2);
+       AIClearMode(reed, 0x2000);
+       AISetMode(reed, 0x4);
+       AIClearMode(brian, 0x2000);
+       AISetMode(brian, 0x4);
+       AIClearMode(brandon, 0x2000);
+       AISetMode(brandon, 0x4);
+       CreateThing(explosion_tpl, ghost0);
+       Sleep(0.05);
+       CreateThing(explosion_tpl, ghost1);
+       Sleep(0.05);
+       CreateThing(explosion_tpl, ghost2);
+       Sleep(0.05);
+       CreateThing(explosion_tpl, ghost2);
+  return;
+
+Pulse:
+	//Cut off real player's arm
+	AmputateJoint(player, 6);
+	Return;
+end
+

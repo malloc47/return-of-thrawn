@@ -1,0 +1,186 @@
+# Jedi Knight Cog Script
+#
+# This cog handles the ending cutscene on both pathes.
+# It was designed by Jarrell Waggoner for the Return of thrawn level
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      entered                                                          
+message	     startup
+
+sector       trigger                                                          
+sector       trigger2                                                         
+
+#------------Stuff for first cutscene-----------------------------------------------
+thing        transport                                                        
+thing        camera1                                                          
+thing        camera2                                                          
+flex         transpeed1                                                       
+flex         transpeed2                                                       
+flex         transpeed3                                                       
+flex         camspeed1                                                        
+#------------Stuff for second cutscene----------------------------------------------
+thing		camera11
+thing		camera12
+thing		camera13
+
+thing		kyle
+
+thing		heavytran
+thing		tranghost
+thing		htran				local
+
+thing		sd
+
+flex		heavyspeed1
+flex		heavyspeed2
+flex		heavyspeed3
+
+flex		sddropspeed=8.0
+template	explosion1
+
+thing		exploghost
+thing		exploghost1
+thing		exploghost2
+
+template	explosion2
+
+thing		explo2ghost
+
+template	heavytemp
+
+sound		explosionsnd1
+sound		explosionsnd2
+#----------------------------------------------------------------------------------
+thing        player                             local           
+int          done=0                             local                         
+end                                                                           
+
+# ========================================================================================
+
+code
+startup:
+	AIClearMode(kyle, 0x606);
+	AISetMoveSpeed(kyle, 2.0);
+	Return;
+entered:
+	If(done==1) Return;	
+
+	if (GetSenderRef() == trigger)
+	{
+	done=1;
+	player = GetLocalPlayerThing();
+	// freeze Kyle
+	SetActorFlags(player, 0xa00000);
+	StopThing(player);
+	// make Kyle invul
+	SetActorFlags(player, 0x8);
+	SendMessageEx(GetMasterCOG(), user0, 5, 0, 0, 0);
+	//Get camera ready for cutscene
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);	
+	MoveToFrame(transport, 1, transpeed1);	
+	MoveToFrame(transport, 2, transpeed2);	
+	WaitForStop(transport); 	
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);	
+	MoveToFrame(transport, 3, transpeed3);	
+//	Print("Base, this is Kyle...");
+	jkPrintUNIString(-1, 1035);
+	Sleep(1.5);	
+//	Print("...Mission complete, I'm comming back.");
+	jkPrintUNIString(-1, 1036);
+	Sleep(1.5);
+//	Print("Great job Kyle!");
+	jkPrintUNIString(-1, 1037);
+	WaitForStop(transport); 	
+	MoveToFrame(camera2, 1, camspeed1);	
+	MoveToFrame(transport, 4, transpeed3);
+	MoveToFrame(transport, 5, transpeed3);
+	Sleep(5.0);
+	jkEndLevel(1);
+	Return;
+	}
+
+	if (GetSenderRef() == trigger2)
+	{
+	done=1;
+	player = GetLocalPlayerThing();
+	// freeze Kyle
+	SetActorFlags(player, 0xa00000);
+	StopThing(player);
+	// make Kyle invul
+	SetActorFlags(player, 0x8);
+	SetActorFlags(kyle, 0x8);
+	SendMessageEx(GetMasterCOG(), user0, 5, 0, 0, 0);
+        SetThingCurGeoMode(player, 0);
+	SetCameraFocus(0, camera11);
+	SetCurrentCamera(0);	
+//	AIClearMode(kyle, 0x606);
+//	AISetMoveSpeed(kyle, 2.0);
+	Sleep(0.5);
+	AISetLookFrame(kyle, 1);
+	AISetMoveFrame(kyle, 1);
+//	Print("I think this ship will do.");
+	jkPrintUNIString(-1, 1044);
+	Sleep(3.5);
+        DestroyThing(kyle);
+	SetCameraFocus(0, camera12);
+	SetCurrentCamera(0);	
+	MoveToFrame(heavytran, 1, heavyspeed1);	
+	WaitForStop(heavytran);
+	Sleep(1.0);
+	MoveToFrame(heavytran, 2, heavyspeed2);	
+	WaitForStop(heavytran);
+	SetCameraFocus(0, camera13);
+	SetCurrentCamera(0);	
+	htran = CreateThing(heavytemp, tranghost);
+	CaptureThing(htran);
+	MoveToFrame(htran, 1, heavyspeed3);	
+	Sleep(2.0);
+//	Print("Base this is Kyle..");
+	jkPrintUNIString(-1, 1035);
+	Sleep(1.0);
+       CreateThing(explosion1, exploghost);
+      	PlaySoundLocal(explosionsnd1, 1, 0, 0);
+	Sleep(0.5);
+//	Print("..I have killed Thrawn and escaped.");
+	jkPrintUNIString(-1, 1038);
+	Sleep(0.5);
+       CreateThing(explosion1, exploghost1);
+       PlaySoundLocal(explosionsnd1, 1, 0, 0);
+	Sleep(1.5);
+//	Print("I set the Star Destroyer to self destruct.");
+	jkPrintUNIString(-1, 1039);
+	Sleep(1.0);
+       CreateThing(explosion2, explo2ghost);
+      	PlaySoundLocal(explosionsnd2, 1, 0, 0);
+	AddDynamicAdd(player, 255, 255, 255);
+	MoveToFrame(sd, 1, sddropspeed);	
+	Sleep(0.2);
+//       DestroyThing(sd);
+         DestroyThing(transport);
+//	Print("Most of the people were able to evacuate in time...");
+	jkPrintUNIString(-1, 1040);
+	Sleep(1.0);
+       CreateThing(explosion, exploghost2);
+      	PlaySoundLocal(explosionsnd1, 1, 0, 0);
+	Sleep(2.0);
+//	Print("...but the empire lost the Centaur.");
+	jkPrintUNIString(-1, 1041);
+	Sleep(2.0);
+//	Print("I have stolen a tie bomber and I am bringing it back to base.");
+	jkPrintUNIString(-1, 1042);
+	Sleep(2.0);
+//	Print("Good job, Kyle.  We will wait for you at the base.");
+	jkPrintUNIString(-1, 1043);
+	Sleep(3.0);
+	jkEndLevel(1);
+	Return;
+	}
+
+
+end
+
+

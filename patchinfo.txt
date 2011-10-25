@@ -1,0 +1,5 @@
+Name=The Return of Thrawn
+Type=Level, Weapon, and Skin
+Description=After Jerec's fall, the Rebel's have gotten news of a secret Impirial project, a cloning device, which was tested on Admiral Thrawn before he was killed.  It is kyle's job to destroy Thrawn's clone before he reinvents the cloning device (which was destroyed at the time of the second Death Star).  His mission will lead him to the center of a deadly Star Destroyer, The Centaur.
+Author=Jarrell Waggoner
+Email=jarlw@juno.com

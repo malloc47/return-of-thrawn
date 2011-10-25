@@ -1,0 +1,161 @@
+# ciz_dialog.cog
+# Jarrell Waggoner
+# 
+# Jedi Knight Cog Script
+# 
+# Controls dialog between citizen and Kyle
+# Created for The Return of Thrawn level
+#
+symbols
+thing 	        camera2			     desc=camera_ghost2
+thing           camera1                          desc=camera_ghost
+thing		gen1
+thing		gen2
+thing		gen3
+thing		gen4
+thing		gen5
+template	trooptemplate
+thing		troop1				local
+thing		troop2				local
+thing		troop3				local
+thing		troop4				local
+thing		troop5				local
+thing		player				local
+message 	entered
+sector	        trigger
+int		status=0
+
+end
+
+code
+
+entered:
+While(status==0)	
+{
+	player = GetLocalPlayerThing();
+	// freeze Kyle
+	SetActorFlags(player, 0xa00000);
+	StopThing(player);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);
+	Sleep(1.0);
+//	Print("Hello, stranger. Are you looking for a job?");
+	jkPrintUNIString(-1, 1012);
+	Sleep(3.0);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);
+//	Print("It depends on what I get paid.");
+	jkPrintUNIString(-1, 1013);
+	Sleep(3.0);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);
+//	Print("Well, I have a job for you, and I will pay you well.");
+	jkPrintUNIString(-1, 1014);
+	Sleep(3.0);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);
+	Sleep(1.0);
+//	Print("What is it?");
+	jkPrintUNIString(-1, 1015);
+	Sleep(3.0);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);
+//	Print("A person living on deck seven stole a book from me.");
+	jkPrintUNIString(-1, 1016);
+	Sleep(3.0);
+//	Print("He could use this book to prove I am guilty..");
+	jkPrintUNIString(-1, 1017);
+	Sleep(2.0);
+//	Print("..in a court case I am involved in.");
+	jkPrintUNIString(-1, 1018);
+	Sleep(3.0);
+//	Print("You need to get to his room and steal it.");
+	jkPrintUNIString(-1, 1019);
+	Sleep(2.0);
+//	Print("You can't go there directly because...");
+	jkPrintUNIString(-1, 1020);
+	Sleep(3.0);
+//	Print("..all access to deck seven has been cut off because of the Ion Sweep");
+	jkPrintUNIString(-1, 1021);
+	Sleep(3.0);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);
+	Sleep(0.5);
+//	Print("Then how am I to get in?");
+	jkPrintUNIString(-1, 1022);
+	Sleep(3.0);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);
+	Sleep(0.5);
+//	Print("You can get in through the vents, if you can find an outlet.");
+	jkPrintUNIString(-1, 1023);
+	Sleep(3.0);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);
+	Sleep(0.5);
+//	Print("What about payment?");
+	jkPrintUNIString(-1, 1024);
+	Sleep(3.0);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);
+	Sleep(0.5);
+//	Print("I can give you twenty thousand.");
+	jkPrintUNIString(-1, 1025);
+	Sleep(3.0);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);
+	Sleep(0.5);
+//	Print("Got anything better, like a key or something?");
+	jkPrintUNIString(-1, 1026);
+	Sleep(3.0);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);
+	Sleep(0.5);
+//	Print("OK, I will give you this key.");
+	jkPrintUNIString(-1, 1027);
+	Sleep(3.0);
+//	Print("By the way, what are you here for anyway?");
+	jkPrintUNIString(-1, 1028);
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);
+	Sleep(1.5);
+//	Print("Acually I am a rebel here on a mission..");
+	jkPrintUNIString(-1, 1029);
+	Sleep(2.0);
+//	Print("..to destroy Grand Admiral Thrawn and escape unharmed.");
+	jkPrintUNIString(-1, 1030);
+	Sleep(3.0);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);
+	Sleep(0.5); 
+//	Print("Oh, OK.");
+	jkPrintUNIString(-1, 1031);
+	Sleep(2.0);
+//	Print("Anyway, good luck.");
+	jkPrintUNIString(-1, 1032);
+	Sleep(3.0);
+
+	troop1 = CreateThing(trooptemplate, gen1);
+	CaptureThing(troop1);
+
+	troop2 = CreateThing(trooptemplate, gen2);
+	CaptureThing(troop2);
+
+	troop3 = CreateThing(trooptemplate, gen3);
+	CaptureThing(troop3);
+
+	troop4 = CreateThing(trooptemplate, gen4);
+	CaptureThing(troop4);
+
+	troop5 = CreateThing(trooptemplate, gen5);
+	CaptureThing(troop5);
+
+	SetCameraFocus(0, jkGetLocalPlayer());
+	if (jkGetSaberCam() == 1) CycleCamera();
+	ClearActorFlags(jkGetLocalPlayer(), 0xa00000);
+	status=1;
+}
+	Return;
+
+end
+

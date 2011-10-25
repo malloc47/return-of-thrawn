@@ -1,0 +1,63 @@
+
+# Jedi Knight Cog Script
+#
+# sec_camera.cog
+#
+# This cog will change the viewpoint to a ghost object when the player 
+# enters a sector and will switch the view point back when the player leaves
+# the sector.  The player is not paused when the view is changed.
+#
+# Created by Jarrell Waggoner
+#
+# Use
+# Thing= The thing that the viewpoint will be set to.
+# sector= The sector that, when entered, will switch the viewpoint
+#
+
+
+
+symbols
+
+thing       camera                           desc=camera_ghost
+sector		sec			     desc=sector
+
+int         old_camera                       local
+int         player                           local
+int         active=0                         local
+
+message     entered
+message     exited
+
+
+end
+
+# ========================================================================================
+
+code
+
+entered:
+   if(active) Return;
+   active = 1;
+
+   player = GetSourceRef();
+
+   if(player == GetLocalPlayerThing())
+   {
+      old_camera = GetCurrentCamera();
+      SetCurrentCamera(0);
+      SetCameraFocus(0, camera);
+   }
+
+
+
+   Return;
+
+exited:
+   SetCameraFocus(0, player);
+   SetCurrentCamera(old_camera);
+   active = 0;
+
+   Return;
+
+end
+

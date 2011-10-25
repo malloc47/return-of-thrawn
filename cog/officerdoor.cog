@@ -1,0 +1,29 @@
+# Jedi Knight Cog Script
+#
+# This cog handles the officer key puzzle
+# It was designed for the Return of thrawn level
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      killed                                                           
+thing        officer                                                          
+thing        door                                                             
+thing        capthing                           local                         
+thing        keyghost                                                         
+template     key                                                              
+
+end                                                                           
+
+# ========================================================================================
+
+code
+killed:
+MoveToFrame(door, 1, 5);
+CreateThing(key, keyghost);
+CaptureThing(capthing);
+Return;
+
+end
+
+

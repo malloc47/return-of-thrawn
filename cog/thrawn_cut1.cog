@@ -1,0 +1,72 @@
+# Jedi Knight Cog Script
+#
+# thrawn_cut1.cog
+#
+# This is the begining cutscene for The Return of Thrawn
+#
+
+
+symbols
+
+thing        camera2                            desc=camera_ghost2            
+thing        camera1                            desc=camera_ghost             
+thing        transport2                                                       
+
+thing        transport                          local                         
+thing        tranghost                                                        
+template     trantemp                                                         
+
+int          player                             local                         
+flex         speed                                                            
+flex	     speed2
+flex	     speed3
+message      startup                                                          
+
+
+end                                                                           
+
+# ========================================================================================
+
+code
+
+startup:
+	player = GetLocalPlayerThing();
+	SetActorFlags(player, 0xa00000);	
+        SetThingCurGeoMode(player, 0);
+	transport = CreateThing(trantemp, tranghost);
+	CaptureThing(transport);
+
+	MoveToFrame(transport, 1, speed);
+
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);
+   	Sleep(1.5);
+//   	Print("There she is, the Centaur.");    
+	jkPrintUNIString(-1, 1108);
+   	Sleep(2.0);                                                       
+//	Print("One of the Empire's oldest star destroyers");
+	jkPrintUNIString(-1, 1109);
+   	Sleep(3.0);
+
+	DestroyThing(transport);
+
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);
+
+	MoveToFrame(transport2, 1, speed2);
+	WaitForStop(transport2);
+
+	Sleep(1.0);
+	MoveToFrame(camera2, 1, speed3);
+	MoveToFrame(transport2, 2, speed3);
+	WaitForStop(camera2);
+	Sleep(1.0);
+	SetCameraFocus(0, player);
+	AutosaveGame();
+	if (jkGetSaberCam() == 1) CycleCamera();
+	ClearActorFlags(player, 0xa00000);
+        SetThingCurGeoMode(player, GetThingGeoMode(player));
+   	return;
+
+end
+

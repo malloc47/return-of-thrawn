@@ -1,0 +1,25 @@
+# Jedi Knight Cog Script
+#
+# Thrawn_trickdoor.cog.cog
+#
+# This Cog handles 1 trick surface
+# This Cog was created by Jarrell Waggoner.
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      activated                                                        
+surface      surface0                                                         
+end                                                                           
+
+# ========================================================================================
+
+code
+activated:
+Print("This switch looks very weird.");
+Return;
+# ........................................................................................
+
+end
+
+

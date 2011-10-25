@@ -1,0 +1,97 @@
+# stormtrooper foley description
+#
+# class		filename		playflags	minRadius	maxRadius	maxVolume
+#####################################################################################################
+#
+
+enterwater	splash1.wav		0x0	1.0	5.0
+enterwaterslow	splash1.wav		0x0	0.5	3.0
+
+jump		jumpbasic01.wav		0x0	1.0     4.0
+falling		I00S131Z.WAV		0x10000		# aaaaaaahhhh!
+
+alert		I00S119Z.WAV  		0x14000		# Blast him!
+alert		i00s121z.wav		0x14000		# You're not authorized in here.
+alert		i00s125z.wav		0x14000		# Stop that Jedi scum.
+alert		i00s122z.wav		0x14000		# Halt!
+alert		i00s113z.wav		0x14000		# After him.
+
+calm		i00s204z.wav		0x10000		# Negative. This sector's clean.
+idle		i00s202z.wav		0x10000		# I have no idea. Did someone tell you that?
+curious		i00s123z.wav            0x10000         # Set blasters on full!
+help		I00S114Z.WAV		0x10000		# Call for reinforcements.
+
+death1		I00S127Z.wav		0x10000        1.0     4.0	# haauggh!
+death1		I00S128Z.wav		0x10000        1.0     4.0	# uuggh!
+death1		i00s129z.wav		0x10000        1.0     4.0	# aaahhhh!
+death1		i00s130z.wav		0x10000        1.0     4.0	# waaaggghh!
+death2		I00S127Z.wav		0x10000        1.0     4.0	# haauggh!
+death2		I00S128Z.wav		0x10000        1.0     4.0	# uuggh!
+death2		i00s129z.wav		0x10000        1.0     4.0	# aaahhhh!
+death2		i00s130z.wav		0x10000        1.0     4.0	# waaaggghh!
+choking		I00S132Z.WAV		0x10000        1.0     4.0	# ugh ug uhh (choke)
+
+victory		I00S110Z.WAV		0x10000		# He won't be giving us any more trouble.
+
+hurtfire	I00S127Z.wav		0x10000        1.0     4.0	# haauggh!
+hurtfire	I00S128Z.wav		0x10000        1.0     4.0	# uuggh!
+hurtenergy	I00S128Z.wav		0x10000        1.0     4.0	# uuggh!
+hurtenergy	I00S127Z.wav		0x10000        1.0     4.0	# haauggh!
+hurtmagic	I00S127Z.wav		0x10000        1.0     4.0	# haauggh!
+hurtimpact	I00S128Z.wav		0x10000        1.0     4.0 	# uuggh!
+hurtspecial	I00S128Z.wav		0x10000        1.0     4.0 	# uuggh!
+hurtspecial	I00S127Z.wav		0x10000        1.0     4.0 	# haauggh!
+
+search		I00S116Z.WAV  		0x10000 # Did you see where he went?
+search		I00S117Z.WAV  		0x10000 # Where did he go?
+search		I00S124Z.WAV  		0x10000 # That Jedi is here somewhere.
+
+fire1		repeat-1.wav		0x0     1.0     4.0
+
+landhard	landbasic01.wav		0x0
+landmetal	landmetaldry01.wav	0x0
+landearth	landDirt01.wav		0x0
+landpuddle	fswtr1l.wav		0x0
+landwater	fswtr2l.wav		0x0
+corpsehit	TrooperBody2.WAV	0x0     0.8     4.0
+corpsehit	TrooperBody1.WAV	0x0     0.8     4.0
+
+# i00s101z.wav	# Set blasters on full.
+# i00s102z.wav  # Blast him.
+# i00s103z.wav  # This is a restricted area.
+# i00s104z.wav  # Did you hear something?
+# i00s105z.wav  # Is this a drill or something?
+# i00s106z.wav  # No, we just haven't had any drills in a while.
+# i00s107z.wav  # Fine by me. I hate drills.
+# i00s108z.wav  # Yes sir.
+# i00s109z.wav  # arrruugh!
+# I00S110Z.WAV  # He won't be giving us any more trouble.
+# I00S111Z.WAV  # Drop your weapon!
+# I00S112Z.WAV  # That's one less rebel.
+# I00S113Z.WAV  # After him.
+# I00S114Z.WAV  # Call for reinforcements.
+# I00S115Z.WAV  # Stand at your post.
+# I00S116Z.WAV  # Did you see where he went?
+# I00S117Z.WAV  # Where did he go?
+# I00S118Z.WAV  # We've lost sight of him sir.
+# I00S119Z.WAV  # Blast him!
+# I00S120Z.WAV  # There he is. Stop him.
+# I00S121Z.WAV  # You're not authorized in here.
+# I00S122Z.WAV  # Halt!
+# I00S123Z.WAV  # Set blasters on full!
+# I00S124Z.WAV  # That Jedi is here somewhere.
+# I00S125Z.WAV  # Stop that Jedi scum.
+# I00S126Z.WAV  # You smell something?
+# I00S127Z.WAV  # haauggh!
+# I00S128Z.WAV  # uuggh!
+# I00S129Z.WAV  # aaahhhh!
+# I00S130Z.WAV  # waaaggghh!
+# I00S131Z.WAV  # aaaaaaahhhh! (fade)
+# I00S132Z.WAV  # ugh ug uhh (choke)
+# i00s201z.wav  # No, you're imagining things.
+# i00s202z.wav  # I have no idea. Did someone tell you that?
+# i00s203z.wav  # Yeah. You're right.
+# i00s204z.wav  # Negative. This sector's clean.
+# i00s205z.wav  # This sector's clean.
+# i00s206z.wav  # Copy that.
+

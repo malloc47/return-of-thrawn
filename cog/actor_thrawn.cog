@@ -1,0 +1,85 @@
+# Jedi Knight Cog Script
+#
+# ACTOR_thrawn.COG
+#
+#
+# Actor COG for thrawn
+# Creates powerup upon death
+#
+# 7/28/97 [CR] Doubled saber damage for single player gameplay reasons
+# 10/14/98 Put saber damage back to normal
+# 10/14/98 Made actor not respond to force attacks
+# 10/14/98 Made actor drop a repeater
+# [CR]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+#
+# ========================================================================================
+
+symbols
+
+message          killed
+message          skill
+message          damaged
+message		 startup
+
+template         powerup=+dcrossbow      local
+thing            newThing                local
+thing            victim                  local
+flex             rval                    local
+int              damage                  local
+int              bin                     local
+int              senderref=-1            local
+ai               flee_ai=noweapon.ai     local
+model            thrawnphaser=phyg.3do   local
+end
+
+# ========================================================================================
+
+code
+startup:
+	JKSetWeaponMesh(victim, thrawnphaser);
+	Return;
+damaged:
+   damage = GetParam(0);
+   if(GetParam(1) == 16)
+   {
+      damage = (damage * 1.0);
+   }
+   ReturnEx(damage);
+   return;
+
+# ........................................................................................
+
+killed:
+   rval = Rand();
+   victim = GetSenderRef();
+   // If he hasn't lost his weapon already somehow.
+   if (GetActorWeapon( victim, 1 ) != -1)
+   {
+      AmputateJoint( victim, 3 );
+      newThing = CreateThing(powerup, GetSenderRef());
+      SetLifeleft(newThing, 200.0);
+
+   }
+   return;
+
+# ........................................................................................
+
+skill:
+   bin = GetParam(0);
+   if (bin == 31)       // Force Grip
+   {
+      return;
+   }
+   else
+   if (bin == 34)       // Deadly Sight
+   {
+      return;
+   }
+
+   ReturnEx(-1);
+   return;
+
+end
+

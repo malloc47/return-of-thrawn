@@ -1,0 +1,56 @@
+# Jedi Knight Cog Script
+#
+# This cog handles the Detention Center doors
+# It was designed for the Return of thrawn level
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      entered                                                          
+message      pulse                                                            
+message      crossed                                                          
+sector       triggersector                                                    
+surface      crosssurface                                                     
+thing        door1                                                            
+thing        door2                                                            
+thing        door3                                                            
+thing        door4                                                            
+int          done=0                             local                         
+int          pulserate                                                        
+//sound	     escape
+end                                                                           
+
+# ========================================================================================
+
+code
+entered:
+While(done==0)	
+	{
+	done=1;
+#	Print("Computer, open all cell doors.");
+	jkPrintUNIString(-1, 1004);
+	Sleep(2.0);
+#	Print("All prisoner cells opening now.");
+	jkPrintUNIString(-1, 1005);
+	Sleep(1.0);
+	MoveToFrame(door1, 1, 10);
+	MoveToFrame(door2, 1, 10);
+	MoveToFrame(door3, 1, 10);
+	MoveToFrame(door4, 1, 10);
+	SetPulse(pulserate);
+	Return;
+	}
+Return;
+
+pulse:
+//	Print("Warning all prisoners on deck 6 have escaped");
+//      PlaySoundLocal(escape, 1, 0, 0);
+	jkPrintUNIString(-1, 1006);
+	Return;
+
+crossed:
+	SetPulse(0.0);
+
+end
+
+

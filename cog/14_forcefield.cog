@@ -1,0 +1,142 @@
+# Jedi Knight Cog Script
+# 14_forcefield.cog	12/23/96 [sxc]
+# This script controls/checks the status of three switches and a force field
+#  that is controlled by the three switches.
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+
+symbols
+
+message		touched
+message		startup	
+message		damaged
+message		activate
+message     timer
+
+float		   maxDamage=10.0
+float		   minDamage=5.0
+
+surface		forcefield		linkid=4    mask=0x408
+surface     forcefield2    linkid=4    mask=0x408
+
+surface		conduit0       linkid=1    mask=0x400
+surface		conduit1       linkid=1    mask=0x400
+surface		conduit2       linkid=1    mask=0x400
+surface		conduit3       linkid=1    mask=0x400
+
+surface     meter0         linkid=2
+surface     meter1         linkid=2
+surface     meter2         linkid=2
+surface     meter3         linkid=2
+
+sound       hitsound=LTSaberHit012.wav     local
+sound       cutsound=00ElectrExplo03.wav   local
+sound       cutsound1=00ElectrExplo02.wav  local
+sound       line1=i00ky104.wav             local
+sound       line2=i00ky78z.wav             local
+sound       poweroff=ForceFieldOff01.wav   local
+sound       wav0=ForceFieldHum01.wav       local
+
+surface		conduit		   local
+int         powerlevel=1   local
+int         damaging=1     local
+int		   field_on=1	   local
+int         flag=0         local
+int         dummy=0        local
+int         dummy1=0       local
+thing		   victim		   local
+float		   damage=0.0 	   local
+float       garbage=0.0    local
+float       garbage1=0     local
+float       type=0.0       local
+float       interval=0.25  local
+
+end
+
+# ========================================================================================
+
+code
+
+startup:
+	ClearAdjoinFlags(forcefield, 2);
+   ClearAdjoinFlags(forcefield2, 2);
+   SetFaceGeoMode(forcefield,0);
+   SetFaceGeoMode(forcefield2,0);
+   SetSurfaceFlags(forcefield,16384);
+   SetSurfaceFlags(forcefield2,16384);
+   SurfaceLightAnim(forcefield, 0, 1, 0.25);
+   SurfaceLightAnim(forcefield2, 0, 1, 0.25);
+   dummy1 = PlaySoundPos(wav0, GetSurfaceCenter(forcefield), 0.75, 8, 15, 1);
+   SetWallCel(conduit0,0);
+   SetWallCel(conduit1,0);
+   SetWallCel(conduit2,0);
+   SetWallCel(conduit3,0);
+   SetWallCel(meter0,0);
+   SetWallCel(meter1,0);
+   SetWallCel(meter2,0);
+   SetWallCel(meter3,0);
+return;
+
+# ========================================================================================
+
+touched:
+	if ((field_on == 1) && (GetSenderID() == 4) && (damaging == 1))
+	{
+    garbage = PlaySoundPos(hitsound, SurfaceCenter(forcefield), 1, 10, -1, 0);
+    victim = GetSourceRef();
+	 damage = (Rand() * (maxDamage - minDamage)) + minDamage;
+	 DamageThing(victim, damage, 0x2, victim);		
+    damaging=0;
+    SetTimer(interval);
+	}
+	else return;
+
+# ========================================================================================
+
+damaged:
+        type = GetParam(1);
+        if ((GetSenderID() == 1) &&
+            (BitTest(16,type)))
+        {
+         conduit = GetSenderRef();
+         if (GetWallCel(conduit) == 0)
+         {
+          garbage = PlaySoundPos(cutsound, SurfaceCenter(conduit), 1.5, 10, -1, 0);
+          garbage1 = PlaySoundPos(cutsound1, SurfaceCenter(conduit), 1.5, 10, -1, 0);
+          SetWallCel(conduit,1);
+          SetWallCel(meter0,powerlevel);
+          SetWallCel(meter1,powerlevel);
+          SetWallCel(meter2,powerlevel);
+          SetWallCel(meter3,powerlevel);
+          powerlevel=powerlevel + 1;
+          flag=flag+1;
+         }
+        }
+
+        if (flag == 4)
+           {
+           StopSound(dummy1, 0,0);
+           field_on = 0;
+           SetAdjoinFlags(forcefield, 2);
+           SetAdjoinFlags(forcefield2, 2);
+           garbage = PlaySoundPos(poweroff, SurfaceCenter(conduit), 1, 10, -1, 0);
+           flag=6;
+#		Print("Emergency Force Field Down");
+      jkPrintUNIString(-1, 1003);
+           }
+        SetFaceGeoMode(forcefield,3);
+        SetFaceGeoMode(forcefield2,3);
+        sleep(0.5);
+        SetFaceGeoMode(forcefield,0);
+        SetFaceGeoMode(forcefield2,0);
+return;
+
+# ========================================================================================
+
+timer:
+      damaging=1;
+      return;
+end
+
+
+

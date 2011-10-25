@@ -1,0 +1,285 @@
+# Jedi Knight Cog Script
+#
+# This cog handles the telporter in the force field room
+# It was designed by Jarrell Waggoner for the Return of thrawn level
+#
+# I decided to leave the text as Debug text so that my 
+# cogstrings.uni won't get too big.
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      activated                                                        
+message      pulse                                                            
+
+surface      changesw                                                         
+surface      switchl                                                          
+surface      switchu                                                          
+
+sound	     switch
+
+thing	     player				local
+thing	     ghosttel1
+thing	     ghosttel2
+
+int          hight=0				local                                                          
+
+template     water=+upenergyhi                                                
+
+float        pulserate=0.25                                                   
+
+thing        ghost0                             linkid=-1                     
+thing	     ghost1
+
+int          dummy                              local                         
+int          dummy1                             local                         
+int          dummy2                             local                         
+int          dummy3                             local                         
+int          dummy4                             local                         
+int          dummy5                             local                         
+int          dummy6                             local                         
+int          dummy7                             local                         
+int          dummy8                             local                         
+
+int          ddummy                              local                         
+int          ddummy1                             local                         
+int          ddummy2                             local                         
+int          ddummy3                             local                         
+int          ddummy4                             local                         
+int          ddummy5                             local                         
+int          ddummy6                             local                         
+int          ddummy7                             local                         
+int          ddummy8                             local                         
+end                                                                           
+# ========================================================================================
+
+code
+activated:
+player = GetLocalPlayerThing();
+if (GetSenderRef() == changesw)
+	{
+	if(hight==0)
+		{
+		SetWallCel(changesw, 1);
+      		PlaySoundLocal(switch, 1, 0, 0);
+		Print("Telport hight set to 1 yard");
+		hight=1;
+		Sleep(1.0);
+		SetWallCel(changesw, 0);
+		Return;
+		}
+
+	if(hight==1)
+		{
+		SetWallCel(changesw, 1);
+      		PlaySoundLocal(switch, 1, 0, 0);
+		Print("Telport hight set to 2 yards");
+		hight=2;
+		Sleep(1.0);
+		SetWallCel(changesw, 0);
+		Return;
+
+		}
+	if(hight==2)
+		{
+		SetWallCel(changesw, 1);
+      		PlaySoundLocal(switch, 1, 0, 0);
+		Print("Telport hight set to 3 yards");
+		hight=3;
+		Sleep(1.0);
+		SetWallCel(changesw, 0);
+		Return;
+		}
+	if(hight==3)
+		{
+		SetWallCel(changesw, 1);
+      		PlaySoundLocal(switch, 1, 0, 0);
+		Print("Telport hight set to 4 yards");
+		hight=4;
+		Sleep(1.0);
+		SetWallCel(changesw, 0);
+		Return;
+		}
+	if(hight==4)
+		{
+		SetWallCel(changesw, 1);
+      		PlaySoundLocal(switch, 1, 0, 0);
+		Print("Telport hight set to 5 yards");
+		hight=5;
+		Sleep(1.0);
+		SetWallCel(changesw, 0);
+		Return;
+		}
+	if(hight==5)
+		{
+		SetWallCel(changesw, 1);
+      		PlaySoundLocal(switch, 1, 0, 0);
+		Print("Telport hight set to 6 yards");
+		hight=6;
+		Sleep(1.0);
+		SetWallCel(changesw, 0);
+		Return;
+		}
+	if(hight==6)
+		{
+		SetWallCel(changesw, 1);
+      		PlaySoundLocal(switch, 1, 0, 0);
+		Print("Telport hight set to 7 yards");
+		hight=7;
+		Sleep(1.0);
+		SetWallCel(changesw, 0);
+		Return;
+		}
+	if(hight==7)
+		{
+		SetWallCel(changesw, 1);
+      		PlaySoundLocal(switch, 1, 0, 0);
+		Print("Telport hight set to 8 yards");
+		hight=8;
+		Sleep(1.0);
+		SetWallCel(changesw, 0);
+		Return;
+		}
+	if(hight==8)
+		{
+		SetWallCel(changesw, 1);
+      		PlaySoundLocal(switch, 1, 0, 0);
+		Print("Telport hight set to 9 yards");
+		hight=9;
+		Sleep(1.0);
+		SetWallCel(changesw, 0);
+		Return;
+		}
+	if(hight==9)
+		{
+		SetWallCel(changesw, 1);
+      		PlaySoundLocal(switch, 1, 0, 0);
+		Print("Telport hight set to 10 yards");
+		hight=0;
+		Sleep(1.0);
+		SetWallCel(changesw, 0);
+		Return;
+		}
+	}
+
+if (GetSenderRef() == switchl)
+	{
+	if(hight==0)
+		{
+		Print("Unable to telport");
+		Print("Destination is a solid mass");
+		Return;
+		}
+
+	if(hight==1)
+		{
+		Print("Unable to telport");
+		Print("Destination is a solid mass");
+		Return;
+
+		}
+	if(hight==2)
+		{
+		Print("Unable to telport");
+		Print("Destination is a solid mass");
+		Return;
+		}
+	if(hight==3)
+		{
+		Print("Unable to telport");
+		Print("Destination is a solid mass");
+		Return;
+		}
+	if(hight==4)
+		{
+		SetWallCel(switchl, 1);
+      		PlaySoundLocal(switch, 1, 0, 0);
+		Print("Preparing to telport");
+		// freeze Kyle
+		SetActorFlags(player, 0xa00000);
+		StopThing(player);
+		SetPulse(PulseRate);
+		Sleep(1.5);
+		TeleportThing(player, ghosttel1);
+		Sleep(1.5);
+		SetPulse(0);				
+		ClearActorFlags(player, 0xa00000);
+		SetWallCel(switchl, 0);
+		Return;
+		}
+	if(hight==5)
+		{
+		Print("Unable to telport");
+		Print("Destination is a solid mass");
+		Return;
+		}
+	if(hight==6)
+		{
+		Print("Unable to telport");
+		Print("Destination is a solid mass");
+		Return;
+		}
+	if(hight==7)
+		{
+		Print("Unable to telport");
+		Print("Destination is a solid mass");
+		Return;
+		}
+	if(hight==8)
+		{
+		Print("Unable to telport");
+		Print("Destination is a solid mass");
+		Return;
+		}
+	if(hight==9)
+		{
+		Print("Unable to telport");
+		Print("Destination is a solid mass");
+		Return;
+		}
+	}
+
+if (GetSenderRef() == switchu)
+	{
+	Print("Preparing to telport");
+	SetWallCel(switchu, 1);
+      	PlaySoundLocal(switch, 1, 0, 0);
+	// freeze Kyle
+	SetActorFlags(player, 0xa00000);
+	StopThing(player);
+	SetPulse(PulseRate);
+	Sleep(1.5);
+	TeleportThing(player, ghosttel2);
+	Sleep(1.5);
+	SetPulse(0);				
+	ClearActorFlags(player, 0xa00000);
+	SetWallCel(switchu, 0);
+	Return;	
+	}
+
+Pulse:
+   dummy = CreateThing(water, ghost0);
+   dummy1 = CreateThing(water, ghost0);
+   dummy2 = CreateThing(water, ghost0);
+   dummy3 = CreateThing(water, ghost0);
+   dummy4 = CreateThing(water, ghost0);
+   dummy5 = CreateThing(water, ghost0);
+   dummy6 = CreateThing(water, ghost0);
+   dummy7 = CreateThing(water, ghost0);
+   dummy8 = CreateThing(water, ghost0);
+
+   ddummy = CreateThing(water, ghost1);
+   ddummy1 = CreateThing(water, ghost1);
+   ddummy2 = CreateThing(water, ghost1);
+   ddummy3 = CreateThing(water, ghost1);
+   ddummy4 = CreateThing(water, ghost1);
+   ddummy5 = CreateThing(water, ghost1);
+   ddummy6 = CreateThing(water, ghost1);
+   ddummy7 = CreateThing(water, ghost1);
+   ddummy8 = CreateThing(water, ghost1);
+   Return;
+
+Return;
+end
+
+

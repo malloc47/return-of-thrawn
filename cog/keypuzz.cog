@@ -1,0 +1,77 @@
+# Jedi Knight Cog Script
+#
+# This cog handles key puzzle.
+# It was designed by Jarrell Waggoner for the Return of thrawn level
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      touched                                                          
+message      startup                                                          
+thing        ciz                                                              
+#thing        book                                                             
+thing        player                             local                         
+
+int          bookgot=0                          local                         
+
+end                                                                           
+
+# ========================================================================================
+
+code
+startup:
+        player = jkGetLocalPlayer();
+	SetActorFlags(ciz, 0x8);
+	AIClearMode(ciz, 0x606);
+	Return;
+touched:
+
+	if (GetSenderRef() == ciz)
+	{
+                if ((GetInv(player, 44) == 0.0) || (GetSourceRef() != player))       // if player does NOT have the needed key
+		{
+		if (bookgot == 1)Return;
+//		Print("Please hurry and get the book");
+		jkPrintUNIString(-1, 1055);
+//		Print("Come back when you have it and I will give you your payment");
+		jkPrintUNIString(-1, 1056);
+		Return;
+		}
+
+                if ((GetInv(player, 44) == 1.0) || (GetSourceRef() != player))       // if player has the needed key
+		{
+		if (bookgot == 1)Return;
+//		Print("Thank you kind sir...");
+		jkPrintUNIString(-1, 1057);
+//		Print("Here is your payment.");
+		jkPrintUNIString(-1, 1058);
+	       ChangeInv(player, 43, 1);
+               ChangeInv(player, 44, 0);
+               SetInvAvailable(player, 44, 0);
+ 	       SetInvAvailable(player, 43, 1);
+		bookgot=1;
+		Return;
+		}
+
+//		if (bookgot == 1)
+//		{
+//		Print("I already gave you your payment!");
+//		Return;
+//		}
+	
+	}		
+	
+
+		
+//	if (GetSenderRef() == book)
+//	{
+//	bookgot=1;
+//	Print("This must be what that man wanted");
+//	DestroyThing(book);
+//	Return;
+//	}
+
+Return;
+end
+
+

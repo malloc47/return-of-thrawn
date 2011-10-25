@@ -1,0 +1,51 @@
+# Jedi Knight COG Script
+#
+# 18_hienergy.cog
+#
+# Makes an energy trail
+#
+# [SXC]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+
+symbols
+ 	
+message	    pulse		
+message     startup
+
+float       pulserate=0.25
+
+template	   water=+upenergyhi
+
+
+thing	    ghost0		 linkid=-1
+thing       ghost1               linkid=-1
+thing       ghost2               linkid=-1
+
+int         dummy                local
+int         dummy1               local
+int         dummy2               local
+
+end
+
+
+# =================================================================================================
+
+code
+
+startup:
+      SetPulse(PulseRate);
+
+
+# =================================================================================================
+	
+pulse:
+   dummy = CreateThing(water, ghost0);		// create smoke at our current location
+   dummy1 = CreateThing(water, ghost1);
+   dummy2 = CreateThing(water, ghost2);
+	return;
+
+end
+
+
+

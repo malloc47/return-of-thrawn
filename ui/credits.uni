@@ -1,0 +1,58 @@
+MSGS 39	  # <--- DON'T FORGET TO UPDATE THIS COUNT
+
+#	"CREDITS_font_num"
+
+"CREDITS_big_1" 		0 "The Return Of Thrawn"
+"CREDITS_small_2" 	0 "Credits"
+"CREDITS_big_3" 		0 ""
+
+"CREDITS_small_4" 	0 "Project Leader"
+"CREDITS_big_5" 		0 "Jarrell Waggoner"
+"CREDITS_big_6" 		0 ""
+
+"CREDITS_ small_7" 	0 "Story designer"
+"CREDITS_big_8" 		0 "Jarrell and Austin Waggoner"
+"CREDITS_big_9" 		0 ""
+"CREDITS_big_10" 	0 ""
+
+"CREDITS_big_11" 		0 "GAME PROGRAMMING"
+"CREDITS_big_12" 		0 ""
+
+"CREDITS_small_13" 	0 "Level Editor"
+"CREDITS_big_14" 		0 "Jarrell Waggoner"
+"CREDITS_big_15" 		0 ""
+"CREDITS_small_16" 	0 "COG Programming"
+"CREDITS_big_17" 		0 "Jarrell Waggoner"
+"CREDITS_big_18" 		0 ""
+
+
+"CREDITS_big_19" 		0 "3D LEVEL DESIGN"
+"CREDITS_big_20" 		0 ""
+"CREDITS_small_21" 	0 "Lead Level Designer"
+"CREDITS_big_22" 		0 "Jarrell Waggoner"
+"CREDITS_big_23" 		0 ""
+"CREDITS_small_24" 	0 "Level Design"
+"CREDITS_big_25" 		0 "Jarrell Waggoner"
+"CREDITS_big_26" 		0 "Austin Waggoner"
+"CREDITS_big_27" 		0 "Reed Waggoner"
+
+"CREDITS_big_28" 		0 ""
+"CREDITS_small_29" 	0 "Enemy and Item Placement"
+"CREDITS_big_30" 		0 "Jarrell Waggoner"
+
+"CREDITS_big_31" 		0 ""
+
+"CREDITS_small_32" 	0 "3D Models"
+"CREDITS_big_33" 		0 "Jarrell Waggoner"
+"CREDITS_big_34" 		0 ""
+
+"CREDITS_big_35" 	0 "ADDITIONAL THANKS"
+
+
+"CREDITS_small_36"	0 "Special Thanks"
+"CREDITS_big_37" 	0 "Winona Waggoner"
+"CREDITS_big_38" 	0 "Jarl Waggoner"
+"CREDITS_big_39" 	0 "Logan Waggoner"
+END
+
+

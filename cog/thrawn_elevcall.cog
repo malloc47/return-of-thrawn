@@ -1,0 +1,116 @@
+# Jedi Knight Cog Script
+#
+# 00_ELEVCALL.COG
+#
+# This Cog controls one elevator that can be summoned to any number of floors
+# A cog must be placed at each floor to be attached to the call button, the up and down
+# buttons, and the elevator.
+# You have to manually assign to each cog what floor level it is on.
+# Remember that the elevator's first frame is 0 even though your first floor may be one.
+#
+# [SC]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+
+
+symbols
+
+message     activated
+## message     blocked
+
+surface     callbutton                       //calls elevator to level
+surface     upbutton                         //sends elevator up
+surface     dnbutton                         //sends elevator down
+
+thing       elevator                         //currently handles only one elevator
+
+flex        speed=5.0                        //sets speed default is 5
+flex        floorlevel=0.0                   //sets floor level for each cog
+flex        totalfloors=0.0                  //lastfloor + 1
+sound       callbutt=beep2.wav      local    //button sounds
+sound       updnbutt=beep1.wav      local
+
+int	    pushed=0		    local
+int         switch                  local    //check variable for cog internal use
+int         bnosound=0              local
+
+end
+
+## Code Section
+
+code
+
+//-------------------------------------------------------------------------------------------------
+
+activated:
+   switch = GetSenderRef();
+        if ((GetCurFrame(elevator) == floorlevel) &&       //if elevator is at the current floor
+            (switch == callbutton))
+        {
+         SetWallCel(callbutton,1);
+         SetWallCel(callbutton,0);
+        }
+   else if ((switch == callbutton) &&                         //if callbutton is pushed
+            (bnosound == 0))
+        {
+         PlaySoundPos(callbutt, SurfaceCenter(callbutton), 0.6, -1, -1, 0 );
+         bnosound = 1;
+         SetWallCel(callbutton,1);
+         MoveToFrame(elevator,floorlevel,speed);
+         WaitForStop(elevator);
+         bnosound = 0;
+         SetWallCel(callbutton,0);
+        }
+   else if ((switch == upbutton) &&                        //if upbutton is pushed
+            (floorlevel == GetCurFrame(elevator)) &&
+            (GetCurFrame(elevator) < totalfloors))
+        {
+	 if (pushed==1)	Return;
+	 pushed=1; 
+         PlaySoundPos(updnbutt, SurfaceCenter(upbutton), 0.6, -1, -1, 0 );
+//	 Print("All passengers have 5 seconds to exit elevator");
+         jkPrintUNIString(-1, 1110);
+         SetWallCel(upbutton,1);
+	 Sleep(1.0);
+//	 Print("5");
+	 jkPrintUNIString(-1, 1111);
+	 Sleep(1.0);
+//	 Print("4");
+	 jkPrintUNIString(-1, 1112);
+	 Sleep(1.0);
+//	 Print("3");
+	 jkPrintUNIString(-1, 1113);
+	 Sleep(1.0);
+//	 Print("2");
+	 jkPrintUNIString(-1, 1114);
+	 Sleep(1.0);
+//	 Print("1");
+	 jkPrintUNIString(-1, 1115);
+	 Sleep(1.0);
+//	 Print("Elevator actavating");
+	 jkPrintUNIString(-1, 1116);
+         MoveToFrame(elevator,(floorlevel+1),speed);
+         WaitForStop(elevator);
+	 pushed=0; 
+         SetWallCel(upbutton,0);
+        }
+   else if ((switch == dnbutton) &&                        //if down button is pushed
+            (floorlevel == GetCurFrame(elevator)) &&
+            (floorlevel > 0))
+        {
+         PlaySoundPos(updnbutt, SurfaceCenter(dnbutton), 0.6, -1, -1, 0 );
+         SetWallCel(dnbutton,1);
+         MoveToFrame(elevator, (floorlevel-1), speed);
+         WaitForStop(elevator);
+         SetWallCel(dnbutton,0);
+        }
+        return;
+
+//-------------------------------------------------------------------------------------------------
+
+//blocked:
+//        MoveToFrame(elevator,(GetCurFrame(elevator)), speed);
+//        return;
+end
+
+

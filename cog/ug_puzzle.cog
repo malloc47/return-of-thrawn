@@ -1,0 +1,89 @@
+# Jedi Knight Cog Script
+#
+# 
+# This cog was designed for the Return of thrawn level
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      activated                                                        
+message	     startup
+message	     entered
+
+thing        door                                                             
+thing        ug                                                               
+
+int          talkedtoug=0                       local                         
+int          donetalking=0                      local                         
+int	     noactavate=0			local
+
+sector	     closedoorsec
+sound        locksound=df_door2-3.wav           local                         
+sound        ugsound                                                          
+                                                          
+end                                                                           
+
+# ========================================================================================
+
+code
+startup:
+   SetActorFlags(ug, 0x8);
+   AIClearMode(ug, 0x606);
+
+
+activated:
+	if (GetSenderRef() == door)
+	{
+       if (noactavate==1) Return;
+       if(talkedtoug==0)
+		{
+      	       PlaySoundLocal(locksound, 1, 0, 0);		
+//		Print("This door is locked with a code.");
+		jkPrintUNIString(-1, 1065);
+		Return;
+		}	
+	if (talkedtoug==1)
+		{
+		MoveToFrame(door, 1, 5);
+//		Print("Ah Ha, This code works!");
+		jkPrintUNIString(-1, 1066);
+		noactavate=1;
+		Return;
+		}
+	Return;
+	}
+
+	if (GetSenderRef() == ug)
+	{
+
+
+	if (donetalking==0)
+		{
+		donetalking=1;
+//		Print("Hey Ugnaught, do you happen to know the code to the door over there?");
+		jkPrintUNIString(-1, 1067);
+		Sleep(2.0);
+		PlaySoundLocal(ugsound, 1, 0, 0);		
+		Sleep(GetSoundLen(ugsound)); 
+		Sleep(3.0);
+//		Print("Ok, Thanks.");
+		jkPrintUNIString(-1, 1068);
+		talkedtoug=1;
+		Return;
+		}
+
+	if (donetalking==1)
+	{
+	Return;
+	}
+	Return;
+}
+Return;
+
+Entered:
+	MoveToFrame(door, 0, 50);
+	talkedtoug=0;
+
+end
+
+

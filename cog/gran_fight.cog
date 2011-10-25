@@ -1,0 +1,69 @@
+# Jedi Knight Cog Script
+#
+# gran_fight.cog
+#
+# "turncoat" attacks something besides Kyle
+# Triggered by entered, activate, or user0
+#
+# [RD]
+#
+# ========================================================================================
+
+symbols
+message	activate
+message	entered
+message	killed
+message	user0
+
+thing		turncoat	mask=-1
+thing		victim	mask=-1
+
+sector	fight	
+ai		goodai
+int		locked=0	local
+end
+
+# ========================================================================================
+
+code
+
+activate:
+	call entered;
+	return;
+
+# ........................................................................................
+
+user0:
+	call entered;
+	return;
+
+# ........................................................................................
+
+entered:
+	if (locked) return;
+
+	locked = 1;
+#	good guy
+	AIClearMode(victim, 0x606);
+	AISetFireTarget(turncoat, victim);
+	AISetMoveThing(turncoat, victim);
+	AISetLookPos(turncoat, GetThingPos(victim));
+	AISetMode(turncoat, 0x202);
+	AIClearMode(turncoat, 0x1004);
+#	bad guy
+	AISetFireTarget(victim, turncoat);
+	AISetMoveThing(victim, turncoat);
+	AISetLookPos(victim, GetThingPos(turncoat));
+	AISetMode(victim, 0x202);
+	AIClearMode(victim, 0x1004);
+	return;
+
+# ........................................................................................
+
+killed:
+	locked = 1;
+	AISetClass(turncoat, goodai);		
+	return;
+
+end
+

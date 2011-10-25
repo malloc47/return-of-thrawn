@@ -1,0 +1,53 @@
+# Jedi Knight Cog Script
+#
+# 06_controldoor.cog
+#
+# Controls door to the tower control room.
+#
+# [RD]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved		
+# ========================================================================================
+
+symbols
+message	startup
+message	activate
+message	arrived
+
+thing		door
+
+sound       locksound=df_door2-3.wav	local
+
+surface	switch
+end
+
+# ========================================================================================
+
+code
+startup:
+	SetWallCel(switch0, 0);
+	SetWallCel(switch1, 0);
+	return;
+
+# ........................................................................................
+
+activate:
+	if (IsMoving(door)) return;
+	
+	if (GetSenderRef() == door)
+	{
+		PlaySoundLocal(locksound, 1, 0, 0);
+		return;
+	}
+
+	SetWallCel(switch, 1);
+	MoveToFrame(door, 1 - GetCurFrame(door), 4);
+	return;
+
+# ........................................................................................
+
+arrived:
+	SetWallCel(switch, 0);
+	return;
+end
+	

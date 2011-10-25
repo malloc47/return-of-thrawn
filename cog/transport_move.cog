@@ -1,0 +1,157 @@
+# Jedi Knight Cog Script
+#
+# transport_move.COG
+#
+# Troop Transport
+#
+# Makes the Troop transport move when touched 
+# also make the lights come on 
+# This cog was designed by Jarrell Waggoner for the Return of Thrawn level
+# [YB]
+#
+
+      
+symbols
+
+thing        lamp1                              mask=0x08                     
+thing        lamp2                              mask=0x08                     
+thing        lamp3                              mask=0x08                     
+thing        lamp4                              mask=0x08                     
+thing        lamp5                              mask=0x08                     
+thing        lamp6                              mask=0x08                     
+thing        lamp7                              mask=0x08                     
+thing        lamp8                              mask=0x08                     
+thing        lamp9                              mask=0x08                     
+thing        lamp10                             mask=0x08                     
+thing        dbdoor1                                                          
+thing        dbdoor2                                                          
+thing	     bigdoor
+thing        trooptran                                                        
+thing	     camera1
+thing	     player				local
+flex         onlight=1.5                        desc=dynamic_light            
+int          happened=0                         local                         
+int          lastframe                                                        
+int          sleeptime                                                        
+int	     done=0				local
+int	     nocam=0				local
+int	     ok=0				local
+flex         transpeed=1                                                      
+flex         transpeedmove=10                                                 
+sector	     camsector
+surface      switch                                                           
+sound	     lampsound
+message      activated                                                        
+message      touched                                                          
+message	     crossed
+surface      offcamsurf
+end                                                                           
+
+# ========================================================================================
+
+code
+activated:
+	if (happened == 1) return;
+	player == jkGetLocalPlayer();
+	SetWallCel(switch, 1);
+	happened=1;
+	//lamp1
+	ThingLight(lamp1, onlight, 0.0);
+	playsoundlocal(lampsound, 1, 0, 0);
+	Sleep(1.0);
+	//lamp2 and open door to the rest of the lights
+	ThingLight(lamp2, onlight, 0.0);
+	playsoundlocal(lampsound, 1, 0, 0);
+	Sleep(1.0);
+	MoveToFrame(bigdoor, 1, 5);	
+	Sleep(1.5);
+	//lamp3
+	ThingLight(lamp3, onlight, 0.0);
+	playsoundlocal(lampsound, 1, 0, 0);
+	Sleep(1.0);
+	//lamp4
+	ThingLight(lamp4, onlight, 0.0);
+	playsoundlocal(lampsound, 1, 0, 0);
+	Sleep(1.0);
+	//lamp5
+	ThingLight(lamp5, onlight, 0.0);
+	playsoundlocal(lampsound, 1, 0, 0);
+	Sleep(1.0);
+	//lamp6
+	ThingLight(lamp6, onlight, 0.0);
+	playsoundlocal(lampsound, 1, 0, 0);
+	Sleep(1.0);
+	//lamp7
+	ThingLight(lamp7, onlight, 0.0);
+	playsoundlocal(lampsound, 1, 0, 0);
+	Sleep(1.0);
+	//lamp8
+	ThingLight(lamp8, onlight, 0.0);
+	playsoundlocal(lampsound, 1, 0, 0);
+	Sleep(1.0);
+	//lamp9
+	ThingLight(lamp9, onlight, 0.0);
+	playsoundlocal(lampsound, 1, 0, 0);
+	Sleep(1.0);
+	//lamp10 and transport actavation
+	ThingLight(lamp10, onlight, 0.0);
+	playsoundlocal(lampsound, 1, 0, 0);
+
+	MoveToFrame(dbdoor1, 1, 5);
+	MoveToFrame(dbdoor2, 1, 5);
+	Sleep(2.0);
+	MoveToFrame(trooptran, 1, transpeed);
+	Sleep(2.0);
+	MoveToFrame(trooptran, 2, transpeed);
+	WaitForStop(trooptran); 
+	ok=1;
+   Return;
+# ........................................................................................
+touched:
+	if (done == 1) return;
+	if (ok == 0) return;
+	if (GetSenderRef() == trooptran)
+	{
+	done=1;
+//	Print("Transport will launch in 5 seconds");
+	jkPrintUNIString(-1, 1060);
+	Sleep(1.0);
+//	Print("5");
+	jkPrintUNIString(-1, 1111);
+	Sleep(1.0);
+//	Print("4");
+	jkPrintUNIString(-1, 1112);
+	Sleep(1.0);
+//	Print("3");
+	jkPrintUNIString(-1, 1113);
+	Sleep(1.0);
+//	Print("2");
+	jkPrintUNIString(-1, 1114);
+	Sleep(1.0);
+//	Print("1");
+	jkPrintUNIString(-1, 1115);
+	Sleep(1.0);
+//	Print("Transport Engaging");
+	jkPrintUNIString(-1, 1061);
+	MoveToFrame(trooptran, 3, transpeedmove);
+	MoveToFrame(camera1, 1, transpeedmove);
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);
+	MoveToFrame(trooptran, lastframe, transpeedmove);
+	Sleep(30);
+	Return;
+	}
+else
+{
+Return;
+}
+
+
+
+crossed:
+	if (nocam == 1) return;
+	SetCameraFocus(0, jkGetLocalPlayer());
+	if (jkGetSaberCam() == 1) CycleCamera();
+	Return;
+end
+

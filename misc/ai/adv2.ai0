@@ -1,0 +1,25 @@
+# Jedi Knight AI File
+#
+# STDEFAULT.AI0
+#
+# Stormtrooper/Fieldtrooper with Rifle AI
+# Easy difficulty
+#
+# [CR]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+
+alignment=-1.0, rank=0.5, fov=170, maxstep=0.2, sightdist=5.0, heardist=1.0, accuracy=0.10
+
+#instinct			args
+LookForTarget   	500.0, 45000.0
+Listen          	0.75, 2.0
+PrimaryFire     	1000.0, 0.8, 5.0, 0.20, 0.0, 300.0, 0.20, 0.00, 3.0, 600.0
+BlindFire       	1500.0, 0.50, 0, 0.8, 0.0, 0.20
+Follow          	0.0, 1.5
+OpenDoors
+CircleStrafe    	6000.0, 30.0, 1.5, 1000.0, 1.0
+ReturnHome
+Talk            	10000.0, 0.10
+
+

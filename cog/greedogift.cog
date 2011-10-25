@@ -1,0 +1,40 @@
+# Jedi Knight Cog Script
+#
+# greedogift.cog
+# This cog handles the Greedo gift.  It was designed for the Return of thrawn level
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      touched                                                          
+message      killed                                                           
+thing        greedo                                                           
+thing	     player			      local
+int          done=0              
+int	     ammobin=12                       local
+end                                                                           
+
+# ========================================================================================
+
+code
+touched:
+If(done==1) Return;
+	player = GetLocalPlayerThing();
+//	Print("Hi, would you like some power cells, sir?");
+	jkPrintUNIString(-1, 1050);
+//	Print("Sure would, Greedo.");
+	jkPrintUNIString(-1, 1051);
+//	Print("Ok, here you go, and have a nice day");
+	jkPrintUNIString(-1, 1052);
+	ChangeInv(player, ammobin, 100.0);
+	done=1;
+	Return;
+Killed:
+//	Print("Hmm.. Perhaps I shouldn't have done that.");
+	done=1;
+Return;	
+# ........................................................................................
+
+end
+
+

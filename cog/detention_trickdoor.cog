@@ -1,0 +1,33 @@
+# Jedi Knight Cog Script
+#
+# Thrawn_trickdoor.cog.cog
+#
+# This Cog handles 4 doors and 4 surfaces
+# This Cog was created by Jarrell Waggoner.
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      activated                                                        
+thing        door0                                                            
+thing        door1                                                            
+thing        door2                                                            
+thing        door3                                                            
+surface      surface0                                                         
+surface      surface1                                                         
+surface      surface2                                                         
+surface      surface3                                                         
+end                                                                           
+
+# ========================================================================================
+
+code
+activated:
+// Print("There must not be any prisoners in these cells.");
+jkPrintUNIString(-1, 1034);
+Return;
+# ........................................................................................
+
+end
+
+

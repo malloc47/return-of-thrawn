@@ -1,0 +1,88 @@
+# Jedi Knight Cog Script
+#
+# Thrawn_reveal.cog
+# This cog handles the revealing of thrawn.
+# It was designed for the Return of thrawn level
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      entered                                                          
+                                    
+thing        light                                                            
+thing        light2                                                           
+#thing        camera2                            desc=camera_ghost2            
+thing        camera1                            desc=camera_ghost             
+thing        door                                                             
+thing        elevator                                                         
+thing        thrawn                                                           
+thing        player                             local                         
+
+sector       trigger                                                          
+
+int          done=0                             local                         
+
+flex	     onlight=2.0			local
+
+model        thrawnphaser=phyg.3do              local                         
+end                                                                           
+
+# ========================================================================================
+
+code
+
+entered:
+	If(done==1) Return;	
+	done=1;
+	player = GetLocalPlayerThing();
+	AISetMode(thrawn, 0x2000);
+//	JKSetWeaponMesh(thrawn, thrawnphaser);
+	// freeze Kyle
+	SetActorFlags(player, 0xa00000);
+	StopThing(player);
+	// make Kyle invul
+	SetActorFlags(player, 0x8);
+	//Get camera ready for cutscene
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);	
+	Sleep(1.5);
+	//Turn on those lights!
+	ThingLight(light, onlight, 0.0);
+	ThingLight(light2, onlight, 0.0);
+	Sleep(1.5);
+	MoveToFrame(camera1, 1, 5);	
+	//Set to thrawn camera
+//	SetCameraFocus(0, camera2);
+//	SetCurrentCamera(0);	
+	Sleep(1.0);
+	//open door
+	MoveToFrame(door, 1, 2);	
+	WaitForStop(door); 
+	//move up elevator
+	MoveToFrame(elevator, 1, 3);
+	WaitForStop(elevator);
+	//Make thrawn look at kyle
+	AISetLookPos(thrawn, GetThingPos(player));
+	Sleep(0.5);
+	//Make thrawn yap
+//	Print("Ahh.. Kyle Katarn.");
+        jkPrintUNIString(-1, 1135);
+	Sleep(3.0);
+//	Print("Your reputation as a jedi has traveled far.");
+        jkPrintUNIString(-1, 1136);
+	Sleep(3.0);
+//	Print("Now you will meet your desiny");
+        jkPrintUNIString(-1, 1137);
+	Sleep(1.0);
+	//get thrawn and kyle ready for battle
+	AIClearMode(thrawn, 0x2000);
+	AISetMode(thrawn, 0x4);
+	ClearActorFlags(player, 0xa00000);
+	ClearActorFlags(player, 0x8);
+	//set view back to kyle
+	SetCameraFocus(0, player);
+	if (jkGetSaberCam() == 1) CycleCamera();
+	Return;
+end
+
+

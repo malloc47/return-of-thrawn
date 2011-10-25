@@ -1,0 +1,137 @@
+# Jedi Knight Cog Script
+#
+# POW_CROSSBOW.COG
+#
+# POWERUP Script - Crossbow
+#
+# [YB & CYW]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+
+
+symbols
+
+thing       powerup                          local
+thing       player                           local
+int         bin=5                            local
+int         ammobin=12                       local
+sound       pickupsnd=thrmlpu2.wav           local
+sound       respawnsnd=Activate01.wav        local
+flex        amount                           local
+
+int         bin_contents=0                   local
+int         autopickup=0                     local
+int         autoselect_weapon=-1             local
+
+message     touched
+message     taken
+message     respawn
+
+end
+
+# ========================================================================================
+
+code
+
+touched:
+   player = GetSourceRef();
+   powerup = GetSenderRef();
+
+   if((GetInv(player, bin) == 0) || (GetInv(player, ammobin) < GetInvMax(player, ammobin)))
+   {
+      TakeItem(powerup, player);
+   }
+
+   Return;
+
+# ........................................................................................
+
+taken:
+   player = GetSourceRef();
+   powerup = GetSenderRef();
+
+   // Do effects.
+   PlaySoundThing(pickupsnd, powerup, 1.0, -1, -1, 0);
+   AddDynamicTint(player, 0.0, 0.0, 0.2);
+
+   if(GetInv(player, bin) == 0)
+   {
+      // Pickup gun and ammo.
+      // Print("Crossbow");
+      jkPrintUNIString(player, bin);
+
+      ChangeInv(player, bin, 1.0);
+
+      // store the old bin contents
+      bin_contents = GetInv(player, ammobin);
+      ChangeInv(player, ammobin, 16.0);
+
+      // Check for Auto Pickup
+      autopickup = GetAutoPickup();
+      if(autopickup & 1)
+      {
+         if(!((autopickup & 4) && (GetWeaponPriority(player, GetCurWeapon(player), 0) >= GetWeaponPriority(player, bin, 0))))
+         {
+            if(!((autopickup & 8) && (GetCurWeapon(player) == 10)))
+            {
+               SelectWeapon(player, bin);
+               Return;
+            }
+         }
+      }
+
+      // Check for Auto Reload
+      if(GetAutoReload() & 1)
+      {
+         if(!bin_contents)
+         {
+            if(!((GetAutoReload() & 2) && (GetCurWeapon(player) == 10)))
+            {
+               // Try to autoselect and see if the best weapon is a power cell weapon
+               autoselect_weapon = AutoSelectWeapon(player, 2);
+               if((autoselect_weapon == 5) || (autoselect_weapon == 6) || (autoselect_weapon == 9))
+                  SelectWeapon(player, autoselect_weapon);
+            }
+         }
+      }
+   }
+   else
+   if(GetInv(player, ammobin) < GetInvMax(player, ammobin))
+   {
+      // Pickup ammo only.
+      // Print("Power Cells");
+      jkPrintUNIString(player, ammobin);
+
+      // store the old bin contents
+      bin_contents = GetInv(player, ammobin);
+
+      ChangeInv(player, ammobin, 16.0);
+
+      // Check for Auto Reload
+      if(GetAutoReload() & 1)
+      {
+         if(!bin_contents)
+         {
+            if(!((GetAutoReload() & 2) && (GetCurWeapon(player) == 10)))
+            {
+               // Try to autoselect and see if the best weapon is a power cell weapon
+               autoselect_weapon = AutoSelectWeapon(player, 2);
+               if((autoselect_weapon == 5) || (autoselect_weapon == 6) || (autoselect_weapon == 9))
+                  SelectWeapon(player, autoselect_weapon);
+            }
+         }
+      }
+   }
+
+   Return;
+
+# ........................................................................................
+
+respawn:
+   powerup = GetSenderRef();
+   PlaySoundThing(respawnsnd, powerup, 0.6, 5.0, 10.0, 0);
+
+   Return;
+
+end
+

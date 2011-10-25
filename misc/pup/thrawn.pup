@@ -1,0 +1,105 @@
+# Puppet control file for player character
+# submode	keyframe	flags	lopri	hipri
+
+Mode=0		# Default mode
+stand		kystand0.key	0x00	0	0
+walk		kywalkF.key	0x01	2	2	# submode 1 = walk
+run		kyrun0.key	0x01	2	2	# submode 2 = run
+walkback	kybackp0.key	0x01	2	2	# submode 3 = walk backwards
+strafeleft	kystrafl.key	0x01	2	2	# submode 4 = strafe left
+straferight	kystrafr.key	0x01	2	2	# submode 5 = strafe right
+death		kyftdeth.key	0x14	5	5	# submode 6 = small death
+death2		kyexdth0.key	0x14	5	5	# submode 7 = big death
+fire		kypnchl0.key	0x28	1	3	# submode 8 = fire (left punch)
+fire2		kypnchr0.key	0x28	1	3	# submode 18 = alt. fire (right punch)
+hit		kyhit0.key	0x28	1	4	# mixin 9 = hit
+rising		kyjump.key	0x00	3	3	# submode 10 = jumping
+drop		kydrop.key	0x00	2	2	# submode 11 = dropping
+fall		kyfall.key	0x00	2	2       # submode 12 = falling
+land		kyland.key	0x38	3	3	# landing
+#activate	kyusew0.key	0x28	1 	3	# submode 13 = activate or use on wall
+crouchforward	kycrchgn.key	0x01	2	2	# submode 14 = crouched
+windup		kyrthro0.key	0x14	1	3	# submode 38 = throw
+toss		kyrthro1.key	0x28	1	3	# submode 15 = throw
+place		kyusef0.key	0x28	1	2	# submode 16 = place on floor (1,2 reduces torso split)
+magic		kyltblt0.key	0x2c	1	3	# submode 17 = use force power (bolt)
+magic2		kydestr0.key	0x28	1	3	# submode 35 = use force power (dest.)
+magic3		kygrip0.key	0x28	1	3	# submode 36 = use force power (choke)
+choke		kychoke0.key	0x28	4	4	# submode 19 = choke
+leap		kyjumpf.key	0x00	3	3	# submode 20 = leaping
+turnleft        kyturnr.key	0x01    3       2       # submode 21 = shufflin' left
+turnright	kyturnl.key	0x01	3	2	# submode 22 = shufflin' right
+crouchback	kycrchbk.key	0x01	2	2	# submode 23 = crouched backwards
+fidget		kyidle0.key	0x20	1	1	# submode 33 = fidget1
+fidget2		kyidle0b.key	0x20	1	1	# submode 34 = fidget2
+holster		kyhlstr.key	0x04	1	3	# submode 39 = holster weapon
+drawfists	kydrawft.key	0x22	1	3	# submode 40 = draw fists
+drawgun		kydrawgn.key	0x22	1	3	# submode 41 = draw gun
+drawsaber	kydrawsb.key	0x22	1	3	# submode 42 = draw saber
+
+Mode=1, BasedOn=0		# Mode 1 = aimed weapon
+stand		kystand2.key	0x00	0	0	# submode 0 = standing
+walk		kywalkG.key	0x01	2	2	# submode 1 = walk
+run 		kyrun2.key	0x01	2	2	# submode 2 = run
+death		kygndth0.key	0x14	5	5	# submode 6 = small death
+fire		kyfire.key	0x28	1	3	# mixin 8 = firing (upper body only)
+fire2		kyfirebg.key	0x28	1	3	# submode 18 = big fire
+fidget		kyidle2.key	0x20	1	1	# submode 24 = fidget1
+fidget2		kyidle2b.key	0x20	1	1	# submode 25 = fidget2
+
+Mode=2, BasedOn=0		# Mode 2 = saber
+stand		kystand1.key	0x00	0	0	# submode 0 = standing
+walk		kywalkS.key	0x01	2	2	# submode 1 = walk
+run 		kyrun1.key	0x01	2	2	# submode 2 = run
+walkback	kybackp1.key	0x01	2	2	# submode 3 = backward walk
+death		kyswdeth.key	0x14	5	5	# submode 6 = small death
+fidget		kyidle1.key	0x20	1	1	# submode 24 = fidget1
+fidget2		kyidle1b.key	0x20	1	1	# submode 25 = fidget2
+
+Mode=3, BasedOn=0		# Mode 3 = unarmed swimming
+stand		kysbtred.key	0x00	2	2	# treading water
+walk		kysbswim.key	0x00	2	2	# walk
+run		kysbswim.key	0x00	2	2	# swim
+walkback	kysbback.key	0x00	2	2	# backwards
+strafeleft	kysbtred.key	0x00	2	2	# strafe left
+straferight	kysbtred.key	0x00	2	2	# strafe right
+death		kysbdeth.key	0x14	5	5	# death
+death2		kysbdeth.key	0x14	5	5	# death2
+fire		kysbpnch.key	0x28	3	3	# fire mixin
+fire2		kysbpnch.key	0x28	3	3	# fire mixin
+hit		kysbhit.key	0x28	1	4	# mixin 9 = hit (upper body only)
+rising		kysbtred.key	0x00	2	2	# up
+drop		kysbtred.key	0x00	2	2	# down
+fall		kysbtred.key	0x00	2	2	#
+turnleft	kysbtred.key	0x00	2	2	# shuffle (treading water)
+turnright	kysbtred.key	0x00	2	2	# shuffle (treading water)
+windup		kysbthr1.key	0x14	1	3	# submode 38 = throw
+toss		kysbthr2.key	0x28	1	3	# submode 15 = throw
+holster		kysbhlst.key	0x04	1	3	# submode 39 = holster weapon
+drawfists	kysbdraw.key	0x22	1	3	# submode 40 = draw fists
+drawgun		kysbdraw.key	0x22	1	3	# submode 41 = draw gun
+drawsaber	kysbdraw.key	0x22	1	3	# submode 42 = draw saber
+windup		kysbthr1.key	0x14	1	3	# submode 38 = throw
+toss		kysbthr2.key	0x28	1	3	# submode 15 = throw
+magic		kysbforc.key	0x2c	1	3	# submode 17 = use force power (bolt)
+magic2		kysbforc.key	0x28	1	3	# submode 35 = use force power (dest.)
+magic3		kysbforc.key	0x28	1	3	# submode 36 = use force power (choke)
+
+
+Mode=4, BasedOn=3		# Mode 4 = gun swimming
+fire		kysbfire.key	0x28	1	3	# fire
+fire2		kysbfire.key	0x28	1	3	# fire
+
+Mode=5, BasedOn=3		# Mode 5 = saber swim
+fire		kysbsabr.key	0x0e	3	3	# fire mixin
+fire2		kysbsabr.key	0x0e	3	3	# fire mixin
+
+joints
+0=15	# 0 = head
+1=16	# 1 = neck
+2=17	# 2 = torso
+3=12	# 3 = primary weapon fire
+4=12	# 4 = secondard weapon fire
+5=13	# 5 = primary weapon aiming joint
+6=7	# 6 = secondary weapon aiming joint
+end

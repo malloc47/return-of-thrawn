@@ -1,0 +1,96 @@
+# Jedi Knight Cog Script
+#
+# XTANK1.COG
+#
+# This cog causes an attached object to explode if damaged sufficiently
+#
+# 5/23 - RKD - Removed buggy "remains" element
+# 5/30 - YB  - Don't explode if hit by fists.
+# 7/7  - CR  - Converted to actor cog
+#              Added delay in exploding
+# 7/7  - YB  - Rewrote the script to use thing user data
+# 7/8  - CR  - Adjusted delay, fixed damage test, marked issue closed :)
+# 7/25 - YB  - Made execution mode SERVER | SYNC
+# 8/26 - RKD - Added killtimerex to fix bug
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+
+flags=0x80
+
+symbols
+
+message        created
+message        damaged
+message        timer
+
+thing	       player			     local
+
+template       barrel_exp=+xtank1_exp        local
+
+int	       busted=0			     local
+int            barrel                        local
+
+
+flex           barrelhealth                  local
+flex           damage                        local
+
+end
+
+# ========================================================================================
+
+code
+
+created:
+   SetThingUserData(GetSenderRef(), 30);     // set the initial user data (i.e. "health")
+   Return;
+
+# ............................................................................................
+
+damaged:
+   player = GetLocalPlayerThing();
+   barrel = GetSenderRef();
+   damage = GetParam(0);
+   barrelhealth = GetThingUserData(barrel);
+   If(GetCurWeapon(player) == 2) Return;
+   If(GetCurWeapon(player) == 3) Return;
+   If(GetCurWeapon(player) == 4) Return;
+   If(GetCurWeapon(player) == 5) Return;
+   If(GetCurWeapon(player) == 6) Return;
+   If(GetCurWeapon(player) == 7) Return;
+   If(GetCurWeapon(player) == 8) Return;
+   If(GetCurWeapon(player) == 9) Return;
+   If(GetCurWeapon(player) == 10) Return;
+//   if(GetParam(1) == 1) Return;              // barrel won't be damaged by damage type impact
+
+   if(barrelhealth <= damage)                // is this enough damage to kill the barrel ?
+   if(busted == 1) Return;
+   {
+	if(GetParam(1) == 1)
+	{
+	busted=1;	
+        SetTimerEx(0.5, barrel, 0, 0);         // prepare to kill the barrel in 0.6 second
+        Return;
+	}
+
+	else
+	{
+	Print("I guess that won't open it..");
+	Print("I think I should punch it open.");
+	Return;
+	}
+   }
+
+   SetThingUserData(barrel, barrelhealth - damage);
+   Return;
+
+# ............................................................................................
+
+timer:
+   KillTimerEx(GetSenderId());
+//   CreateThing(barrel_exp, GetSenderId());   // create an explosion
+//   DestroyThing(GetSenderId());              // Destroy the barrel
+     RotatePivot(GetSenderId(), 1, 5);
+   Return;
+
+end
+

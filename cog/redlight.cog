@@ -1,0 +1,64 @@
+# Jedi Knight Cog Script
+#
+# 16a_redlight.cog
+#
+# Klaxon light for falling ship.
+#
+# This cog changes the assigned sectors' colormaps to red.
+# sleepTime0 = time to sleep with colormap 0
+# sleepTime1 = time to sleep with colormap 1
+# period = determines how quickly light fades to black
+#
+# [IS]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved		
+# ========================================================================================
+
+symbols
+
+message		startup
+message		pulse
+
+sector		sect0		nolink
+sector		sect1		nolink
+sector		sect2		nolink
+sector		sect3		nolink
+sector		sect4		nolink
+sector		sect5		nolink
+sector		sect6		nolink
+sector		sect7		nolink
+sector		sect8		nolink
+sector		sect9		nolink
+sector		sect10	nolink
+sector		sect11	nolink
+sector		sect12	nolink
+sector		sect13	nolink
+sector		sect14	nolink
+sector		sect15	nolink
+
+float		period=1.0
+
+int		cmap=0		local
+int		i=0			local
+
+end
+
+# ========================================================================================
+
+code
+
+startup:
+	SetPulse(period);
+	return;
+
+# .................................................................................
+
+pulse:
+	cmap = 1 - cmap;
+	for (i=0; i<=15; i=i+1) {
+		if (sect0[i] >= 0) SetColorMap(sect0[i], cmap);
+	}
+	return;
+
+end
+

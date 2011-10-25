@@ -1,0 +1,110 @@
+# ForceFieldSwitch
+# Jedi Knight Cog Script
+#
+# 10_FFieldSwitch.cog
+#
+# this script activates a forcefield that damages a player on touch.
+# also sets this surface to be nomove and translucent.
+# Shooting or activating switch will turn it off.
+# Adapted from Steve's level 18 script
+#
+# [DB]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+
+
+symbols
+
+message     startup
+message     damaged
+message     activated
+message     touched
+message     timer
+
+surface     switch                        linkid=1 mask=0x448
+surface     damsurf                       mask=0x448
+surface     damsurf2                      mask=0x448
+
+flex        maxdamage=10.0
+flex        mindamage=5.0
+flex        damage=0.0                    local
+
+sound       powerup=ForceFieldOn01.wav    local
+sound       powerdown=ForceFieldOff01.wav local
+sound       wav0=ForceFieldHum01.wav      local
+sound       wav1=ForceFieldHit01.wav      local
+
+int         garbage=0                     local
+
+thing       victim                        local
+
+end
+
+
+code
+startup:
+   SetWallCel(switch,0);                  //on
+   ClearAdjoinFlags(damsurf,10);          //no move
+   ClearAdjoinFlags(damsurf2,10);
+   SetFaceGeoMode(damsurf,0);             //translucent
+   SetFaceGeoMode(damsurf2,0);
+   SetSurfaceFlags(damsurf,16384);        //magsealed
+   SetSurfaceFlags(damsurf2,16384);
+   PlaySoundPos(wav0, GetSurfaceCenter(damsurf), 1.0, 1, 10, 0x1);
+   return;
+
+activated:
+   if (GetSenderID() != 1) return;
+
+   if (GetWallCel(switch) == 0)
+   {
+      SetWallCel(switch,1);                     //off
+      PlaySoundLocal(powerdown, 1, 0, 0);
+      SetAdjoinFlags(damsurf,10);               //move
+      SetAdjoinFlags(damsurf2,10);
+   }
+   else if (GetWallCel(switch) == 1)
+   {
+      SetWallCel(switch,0);                     //on
+      PlaySoundLocal(powerup, 1, 0, 0);
+      ClearAdjoinFlags(damsurf,10);             //no move
+      ClearAdjoinFlags(damsurf2,10);
+   }
+   return;
+
+touched:
+   if ((GetSenderRef() == damsurf) || (GetSenderRef() == damsurf2))
+   {
+      victim = GetSourceRef();
+      damage = (Rand()*(maxdamage - mindamage))+mindamage;
+      garbage = DamageThing(victim, damage, 0x4, victim);
+      PlaySoundPos(wav1, GetSurfaceCenter(damsurf), 0.5, 1, 10, 0);
+      call fieldflash;
+   }
+   Return;
+
+damaged:
+   if (GetSenderID() == 1)
+   {
+      call activated;
+   }
+   else
+   {
+      call fieldflash;
+   }
+   return;
+
+timer:
+   SetFaceGeoMode(damsurf,0);
+   SetFaceGeoMode(damsurf2,0);
+   Return;
+
+fieldflash:
+      SetFaceGeoMode(damsurf,4);
+      SetFaceGeoMode(damsurf2,4);
+      KillTimerEx(1);
+      SetTimerEx(0.5, 1, 0, 0);
+      return;
+
+end
+

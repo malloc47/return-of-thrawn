@@ -1,0 +1,72 @@
+# Jedi Knight Cog Script
+#
+# 03_GOALS.COG
+#
+# This script handles the following goals :
+# 
+#
+# [YB]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+
+
+symbols
+
+message      entered                                                          
+
+sector       goal0sector0                                                     
+sector       goal1sector0                                                     
+sector       goal2sector0                                                     
+sector       goal3sector0                                                     
+sector       goal4sector0                                                     
+
+int          done0=0                            local                         
+int          done1=0                            local                         
+int          done2=0                            local                         
+int          done3=0                            local                         
+int          done4=0                            local               
+end                                                                           
+
+# ========================================================================================
+
+code
+
+entered:
+   if((!done0) && (GetSenderRef() == goal0sector0))
+   {
+      SendMessageEx(GetMasterCOG(), user0, 1, 0, 0, 0);
+      Print("Officer: I Surrender!");
+      done0 = 1;
+      Return;
+   }
+
+   if((!done1) && (GetSenderRef() == goal1sector0))
+   {
+      SendMessageEx(GetMasterCOG(), user0, 2, 0, 0, 0);
+      done1 = 1;
+      Return;
+   }
+
+   if((!done2) && (GetSenderRef() == goal2sector0))
+   {
+      SendMessageEx(GetMasterCOG(), user0, 3, 0, 0, 0);
+      done2 = 1;
+      Return;
+   }
+   if((!done2) && (GetSenderRef() == goal3sector0))
+   {
+      SendMessageEx(GetMasterCOG(), user0, 4, 0, 0, 0);
+      done3 = 1;
+      Return;
+   }
+   if((!done2) && (GetSenderRef() == goal4sector0))
+   {
+      SendMessageEx(GetMasterCOG(), user0, 5, 0, 0, 0);
+      done4 = 1;
+      Return;
+   }
+
+   Return;
+end
+
+

@@ -1,0 +1,104 @@
+# Jedi Knight Cog Script
+#
+# lamp_switch.COG
+#
+# Lamp Controled by a Switch
+#
+# Link the lamp object and the TEMPLATE to be used when
+# the lamp is broken.
+#
+# [YB]
+#
+
+      
+symbols
+
+thing        lamp                               desc=breakable_lamp           mask=0x08
+template     broken_lamp_tpl                    desc=broken_lamp_template     
+flex         onlight=1.5                        desc=dynamic_light            
+flex         offlight=0.0                                                     
+int          on=0                                                             
+int          dummy                              local                         
+int          busted=0                           local                         
+sound        snd=00ElectrExplo01.wav            local                         
+surface      switch                                                           
+
+template     sparkTemplate=+sparks                                            
+thing        sparkGhost                                                       
+thing        sparkGhost2                                                      
+
+flex         minimumDelay=0.5                                                 
+flex         maximumDelay=1.0                                                 
+
+sound        sparksound=00electrexplo3.wav                                    
+
+message      activated                                                        
+message      damaged                                                          
+message      startup                                                          
+message      timer                                                            
+
+end                                                                           
+
+# ========================================================================================
+
+code
+startup:
+	if (on == 0)
+	{
+	SetWallCel(switch, 1);
+	ThingLight(lamp, onlight, 0.0);
+	Return;
+	}
+
+	if (on == 1)
+	{
+	SetWallCel(switch, 0);
+        ThingLight(lamp, oflight, 0.1);
+	Return;
+	}
+
+   Return;
+
+activated:
+	if (busted == 1) return;
+	if (on == 1)
+	{
+	SetWallCel(switch, 1);
+	ThingLight(lamp, onlight, 0.0);
+	on=0;
+	Return;
+	}
+
+	if (on == 0)
+	{
+	SetWallCel(switch, 0);
+        ThingLight(lamp, oflight, 0.1);
+	on=1;
+	Return;
+	}
+
+   Return;
+
+# ........................................................................................
+
+damaged:
+   dummy = PlaySoundPos(snd, GetThingPos(lamp), 1.0, -1, -1, 0);
+   ThingLight(lamp, 0.0, 0.1);
+   dummy = CreateThing(broken_lamp_tpl, lamp);
+   DestroyThing(lamp);
+   SetTimer(minimumDelay + Rand() * (maximumDelay - minimumDelay));
+   busted=1;
+   Return;
+
+timer:
+
+   PlaySoundThing(sparksound, sparkGhost, 1, -1, -1, 0);
+   CreateThing(sparkTemplate, sparkGhost);
+   Sleep(1.0);
+   PlaySoundThing(sparksound, sparkGhost2, 1, -1, -1, 0);
+   CreateThing(sparkTemplate, sparkGhost2);
+   SetTimer(minimumDelay + Rand() * (maximumDelay - minimumDelay));
+
+   Return;
+end
+

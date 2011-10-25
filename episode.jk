@@ -1,0 +1,12 @@
+"The Return of Thrawn"
+
+TYPE 1
+
+SEQ 2
+
+# <line> <cd>  <level>  <type>   <file>         <lightpow>  <darkpow>   <gotoA>  <gotoB>
+
+1:	0	1	LEVEL	introduction.jkl	0	0	2	-1
+2:	0	2	LEVEL	Test1.jkl	0	0	-1	2
+
+end

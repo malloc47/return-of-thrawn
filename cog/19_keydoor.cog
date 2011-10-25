@@ -1,0 +1,115 @@
+# Jedi Knight Cog Script
+#
+# 19_keydoor.cog
+#
+# Locked Door Script For level 19A.
+#
+# [DS/JS]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved		
+# ========================================================================================
+
+symbols
+
+message	startup		
+message	activate	
+message	arrived		
+message	timer		
+
+thing		door0		linkid=2
+
+thing		player
+
+flex		movespeed=8.0
+flex		sleeptime=2.0
+flex		lightvalue=0.5
+
+surface	switch0 linkid=1
+surface	switch1 linkid=1
+
+sector	doorsector	local
+
+int		numdoors		local
+int		doorstatus	local
+int		movestatus	local
+int		waiting=0	local
+
+sound		wav0
+sound		wav1=beep1.wav	local
+sound		locksound=df_door2-3.wav	local
+
+end
+
+# ========================================================================================
+
+code
+
+startup:
+	doorsector = getthingsector(door0);
+	sectoradjoins(doorsector, 0);
+	sectorlight(doorsector, lightvalue, 0.0);			// add some light to door sector
+	return;
+
+# ........................................................................................
+
+activate:
+	player = GetSourceRef();
+
+	if (GetWallCel(switch0) == 1) return;
+
+	// not the switch
+	if (GetSenderId() == 2) 
+	{
+      PlaySoundLocal(locksound, 1, 0, 0);
+	}
+	else if (GetSenderId() == 1) 
+	{
+		// no key
+		if (GetInv(player, 43) == 0) 
+		{
+			if (waiting) return;
+		
+			PlaySoundLocal(wav0, 1.0, 0.0, 0);
+			jkPrintUNIString(-1, 1002);						// will display the "Hmm, locked." line		
+			waiting=1;
+			SetTimerEx(5.0, 1, 0, 0);
+			return;
+		} 
+		else 
+		{
+			SetWallCel(switch0, 1);
+			SetWallCel(switch1, 1);
+			SectorAdjoins(doorsector, 1);	
+
+			PlaySoundPos(wav1, SurfaceCenter(GetSenderRef()), 1, -1, -1, 0);
+			MoveToFrame(door0, 1, movespeed);
+		}	
+	}	
+
+	return;
+
+# ........................................................................................
+
+arrived:
+	if (GetCurFrame(door0) == 1) {
+		SetTimerEx(sleeptime, 0, 0, 0);
+	} else {
+		SectorAdjoins(doorsector, 0);	
+		SetWallCel(switch0, 0);
+		SetWallCel(switch1, 0);
+	}
+	return;
+	
+# ........................................................................................
+
+timer:
+	if (GetSenderId() == 0)	{
+		MoveToFrame(door0, 0, movespeed);
+	} else {
+		waiting=0;
+	}
+	return;
+	
+end
+
+

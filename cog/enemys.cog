@@ -1,0 +1,113 @@
+# Jedi Knight Cog Script
+#
+# This cog handles the enemys option in the introduction.
+# It was designed by Jarrell Waggoner for the Return of thrawn level
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      entered                                                          
+
+sector       trigger                                                          
+
+thing        camera1                                                          
+thing        camera2                                                          
+thing	     camera3
+thing        player				local                         
+thing        ghosttel1                                                        
+thing		troop1
+thing		troop2
+thing		troop3
+int          done=0                             local                         
+flex		time
+end                                                                           
+
+# ========================================================================================
+
+code
+entered:
+	If(done==1) Return;	
+	done=1;
+	player = GetLocalPlayerThing();
+
+	// freeze Kyle
+	SetActorFlags(player, 0xa00000);
+	StopThing(player);
+
+	// make Kyle invul and invisible
+	SetActorFlags(player, 0x8);
+        SetThingCurGeoMode(player, 0);
+
+	AISetMode(troop1, 0x2000);
+	AISetMode(troop2, 0x2000);
+	AISetMode(troop3, 0x2000);
+
+	//Get camera ready for cutscene
+	SetCameraFocus(0, camera1);
+	SetCurrentCamera(0);	
+
+        RotatePivot(camera1, 1, time);
+//	Print("BLASTER TROOPER ADVANCED");
+        jkPrintUNIString(-1, 1123);
+	Sleep(3.0);
+//	Print("Strong Health");
+        jkPrintUNIString(-1, 1124);
+	Sleep(3.0);
+//	Print("Fast Fire Rate");
+        jkPrintUNIString(-1, 1125);
+	Sleep(3.0);
+//	Print("Projectile: Blaster Shots");
+        jkPrintUNIString(-1, 1126);
+	Sleep(3.0);
+
+	//Get camera ready for next enemy
+
+	SetCameraFocus(0, camera2);
+	SetCurrentCamera(0);	
+
+        RotatePivot(camera2, 1, time);
+//	Print("REPEATER TROOPER ADVANCED");
+        jkPrintUNIString(-1, 1127);
+	Sleep(3.0);
+//	Print("Medium Health");
+        jkPrintUNIString(-1, 1128);
+	Sleep(3.0);
+//	Print("Very Fast Fire Rate");
+        jkPrintUNIString(-1, 1129);
+	Sleep(3.0);
+//	Print("Projectile: Repeater Shots");
+        jkPrintUNIString(-1, 1130);
+	Sleep(3.0);
+
+	//Get camera ready for next enemy
+
+	SetCameraFocus(0, camera3);
+	SetCurrentCamera(0);	
+
+        RotatePivot(camera3, 1, time);
+//	Print("RAIL TROOPER ADVANCED");
+        jkPrintUNIString(-1, 1131);
+	Sleep(3.0);
+//	Print("Low Health");
+        jkPrintUNIString(-1, 1132);
+	Sleep(3.0);
+//	Print("Fast Burst Fire Rate");
+        jkPrintUNIString(-1, 1133);
+	Sleep(3.0);
+//	Print("Projectile: Rail Charges");
+        jkPrintUNIString(-1, 1134);
+	Sleep(3.0);
+
+       SetThingCurGeoMode(player, GetThingGeoMode(player));
+	ClearActorFlags(player, 0xa00000);
+	// make Kyle vulnerable
+	ClearActorFlags(player, 0x8);
+ 	//set view back to real kyle
+	SetCameraFocus(0, player);
+	if (jkGetSaberCam() == 1) CycleCamera();
+	TeleportThing(player, ghosttel1);
+	done=1;
+Return;
+end
+
+

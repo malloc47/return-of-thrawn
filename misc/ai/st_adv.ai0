@@ -1,0 +1,24 @@
+# Jedi Knight AI File
+#
+# STREAPDEFAULT.AI0
+#
+# Fieldtrooper with Repeater AI
+# Easy difficulty
+#
+# [CR]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+
+alignment=-1.0, rank=0.9, fov=170, maxstep=1.0, sightdist=5.0, heardist=1.0, accuracy=0.10
+
+#instinct			args
+LookForTarget   	500.0, 45000.0
+Listen          	0.70, 3.0
+PrimaryFire     	250.0, 0.7, 6.0, 0.30, 0.0, 250.0, 0.20, 0.00, 3.0, 300.0
+BlindFire       	1000.0, 0.35, 0, 0.7, 1.0, 0.10
+Follow          	0.0, 2.0
+OpenDoors
+CircleStrafe    	5000.0, 30.0, 2.5, 500.0, 0.5
+ReturnHome
+Talk            	1000.0, 0.5
+

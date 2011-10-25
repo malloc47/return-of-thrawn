@@ -1,0 +1,49 @@
+# Jedi Knight Cog Script
+#
+# shuttlefly.cog 
+# This cog will make the impirial shuttle fly. It was designed for the Return of thrawn level
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      entered                                                          
+thing        shuttle                                                          
+thing        bigdoor1                                                         
+thing        bigdoor2                                                         
+thing	     bigdoor3
+thing        smalldoor1                                                       
+int          speed1                                                           
+int          speed2                                                           
+int          done=0                                                           
+sector       trigger                                                          
+#sound        sound1                                                           
+end                                                                           
+
+# ========================================================================================
+
+code
+entered:
+While(done==0)
+{
+done=1;
+MoveToFrame(smalldoor1, 1, 50);
+Sleep(3.0);
+#playsoundlocal(sound1, 1, 0, 0);
+MoveToFrame(shuttle, 1, speed1);
+Sleep(0.5);
+MoveToFrame(shuttle, 2, speed1);
+MoveToFrame(shuttle, 3, speed2);
+Sleep(2.0);
+MoveToFrame(bigdoor1, 1, 5);
+MoveToFrame(bigdoor2, 1, 5);
+MoveToFrame(bigdoor3, 1, 5);
+Sleep(3.0);
+DestroyThing(shuttle); 
+MoveToFrame(smalldoor1, 0, 50);
+Return;
+}
+
+Return;
+end
+
+

@@ -1,0 +1,79 @@
+# Jedi Knight Cog Script
+#
+# ACTOR_I2.COG
+#
+#
+# Actor COG for Commandos with Repeaters
+# Creates powerup upon death
+#
+# 7/28/97 [CR] Doubled saber damage for single player gameplay reasons
+#
+# [CR]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+#
+# ========================================================================================
+
+symbols
+
+message          killed
+message          skill
+message          damaged
+
+template         powerup=stbp   	 local
+thing            newThing                local
+int              bin                     local
+int              senderref=-1            local
+ai               flee_ai=noweapon.ai     local
+int              damage                  local
+
+end
+
+# ========================================================================================
+
+code
+
+damaged:
+   damage = GetParam(0);
+   if(GetParam(1) == 16)
+   {
+      damage = (damage * 2.0);
+   }
+   ReturnEx(damage);
+   return;
+
+# ........................................................................................
+
+killed:
+   victim = GetSenderRef();
+   // If he hasn't lost his weapon already somehow.
+   if (GetActorWeapon(victim, 1) != -1)
+   {
+      AmputateJoint(victim, 3);
+      newThing = CreateThing(powerup, victim);
+      SetLifeleft(newThing, 200.0);
+   }
+   return;
+
+# ........................................................................................
+
+skill:
+   bin = GetParam(0);
+   }
+   else
+   if (bin == 31)       // Force Grip
+   {
+      ReturnEx(10);     // return base damage that is taken by this actor.
+      return;
+   }
+   else
+   if (bin == 34)       // Deadly Sight
+   {
+      ReturnEx(5);      // return base damage that is taken by this actor.
+      return;
+   }
+   ReturnEx(-1);
+   return;
+
+end
+

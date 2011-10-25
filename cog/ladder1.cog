@@ -1,0 +1,32 @@
+symbols
+
+surface       downsect                                                         
+message      activated                                                        
+thing        ghosttel1                                                        
+thing        ghosttel2                                                        
+thing        player                             local                         
+surface      upsuf1                                                           
+end                                                                           
+
+code
+
+
+
+
+activated:
+	if (GetSenderRef() == upsuf1)
+	{
+	player = GetLocalPlayerThing();
+	TeleportThing(player, ghosttel1);
+	return;
+	}
+
+	if (GetSenderRef() == downsect)
+	{
+	player = GetLocalPlayerThing();
+	TeleportThing(player, ghosttel2);
+	return;
+	}
+	return;
+	
+end

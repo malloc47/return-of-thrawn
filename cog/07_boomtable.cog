@@ -1,0 +1,54 @@
+# Jedi Knight Cog Script
+#
+# 07_boomtable.COG
+#
+# exploding table cog
+#
+# [SXC]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved		
+
+
+symbols
+
+message     damaged
+
+thing       wholetable     mask=0x408     linkid=1
+thing       ghostpart0     mask=0x408     linkid=2
+thing       ghostpart1     mask=0x408     linkid=2
+thing       part0                         local
+thing       part1                         local
+thing       explosion
+
+template    break0
+template    break1
+template    exp=+furniture_exp            local
+
+int         damage=0                      local
+int         type                          local
+float       movespeed=1.0
+end
+
+# ========================================================================================
+
+code
+
+damaged:
+   type = GetParam(1);
+   if (BitTest(type, 16))
+      {
+       damage=damage+1;
+       if (damage == 1)
+          {
+          CreateThing(exp, explosion);
+          DestroyThing(wholetable);
+          part0=CreateThing(break0, ghostpart0);
+          part1=CreateThing(break1, ghostpart1);
+          CaptureThing(part0);
+          CaptureThing(part1);
+          MoveToFrame(part0, 1, movespeed);
+          MoveToFrame(part1, 1, movespeed);
+          }
+      }
+   return;
+end

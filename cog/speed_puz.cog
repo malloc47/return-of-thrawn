@@ -1,0 +1,97 @@
+# Jedi Knight Cog Script
+#
+# speed_puz.cog
+#
+# An adjoin is "no move" and "always draw" until the player activates "speed."
+#
+# [JS]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+# ========================================================================================
+
+symbols
+message	startup		
+message	entered
+message	pulse		
+message	crossed		
+
+surface	wall							linkid=1
+surface	wallback
+surface wall2
+surface wall2back
+sound		wav1						desc=success_alert
+
+int		player					local
+int		trickdone=0				local
+
+sector	alert_sector			desc=alert_sector
+	
+end
+
+# ========================================================================================
+
+code
+
+startup:
+	player = GetLocalPlayerThing();
+   ClearAdjoinFlags(wall, 2);				//no move
+   ClearAdjoinFlags(wallback, 2);
+   ClearAdjoinFlags(wall2, 2);				//no move
+   ClearAdjoinFlags(wall2back, 2);
+	return;
+
+# ........................................................................................
+
+entered:
+	if(trickdone) Return;
+	SetPulse(0.5);
+	
+	return;
+
+# ........................................................................................
+
+crossed:
+	if(trickdone) Return;
+	if(GetSenderId(GetSenderRef()) !=1) return;
+
+	SetPulse(0);
+	PlaySoundPos(wav1, SurfaceCenter(wallback), 1.5, -1, -1, 0 );
+	return;
+
+# ........................................................................................
+
+pulse:
+	if(IsInvActivated(player, 22))	
+	{
+	   trickdone = 1;
+	   SetPulse(0);
+		SetAdjoinFlags(wall, 3);
+                SetAdjoinFlags(wallback, 3);
+#		SetFaceGeoMode(wall, 0);
+#		SetFaceGeoMode(wallback, 0);
+		SetAdjoinFlags(wall2, 3);
+                SetAdjoinFlags(wall2back, 3);
+#		SetFaceGeoMode(wall2, 0);
+#		SetFaceGeoMode(wall2back, 0);
+
+
+	}
+	else
+	{
+		if(trickdone == 1)
+		{
+		ClearAdjoinFlags(wall, 2);				//no move
+		ClearAdjoinFlags(wallback, 2);
+		ClearAdjoinFlags(wall2, 2);				//no move
+		ClearAdjoinFlags(wall2back, 2);
+		trickdone=0;
+		}
+		if(trickdone == 0)
+		{
+
+		}
+	}
+	return;
+
+end
+

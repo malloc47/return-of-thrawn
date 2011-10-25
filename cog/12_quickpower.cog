@@ -1,0 +1,46 @@
+# Jedi Knight Cog Script
+#
+# 12_quickpower.cog
+#
+# generates power particles from a source
+#
+# [DB]
+#
+# (C) 1997 LucasArts Entertainment Co. All Rights Reserved
+
+
+symbols
+	message	crossed		
+	message	pulse		
+	
+	thing		ghost0	linkid=-1
+	thing		ghost1	linkid=-1
+	thing		ghost2	linkid=-1
+	thing		ghost3	linkid=-1
+	
+	flex		pulserate=0.25
+	
+	int	dummy	local
+	
+	surface	adjoin0
+		
+
+	template	water=+superenerg2	local
+
+end
+
+
+code
+crossed:
+	SetPulse(pulserate);
+	return;
+
+pulse:
+	dummy = CreateThing(water, ghost0);
+	dummy = CreateThing(water, ghost1);
+	dummy = CreateThing(water, ghost2);
+	dummy = CreateThing(water, ghost3); 
+	return;
+
+end
+

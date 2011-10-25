@@ -1,0 +1,51 @@
+# Jedi Knight Cog Script
+#
+# This cog handles Breakable door on the self destruct path.
+# It was designed by Jarrell Waggoner for the Return of thrawn level
+#
+# This Cog is Not supported by LucasArts Entertainment Co
+
+symbols
+message      damaged                                                          
+message      startup                                                          
+
+thing        door                                                             
+
+int          busted=0                           local                         
+
+flex         health                             local                         
+flex	      speed=5.5
+flex         damage                             local                         
+end                                                                           
+
+# ========================================================================================
+
+code
+startup:
+	SetThingUserData(door, 50);     // set the initial user data (i.e. "health")
+	Return;
+damaged:
+   damage = GetParam(0);
+   health = GetThingUserData(door);
+
+   if(health <= damage)          // is this enough damage to kill the barrel ?
+	{
+ 	if(GetParam(1) == 1)		     // barrel will only be damaged by damage type impact
+		{
+
+		if (busted == 1) Return;
+		movetoframe(door, 1, speed);
+		busted=1;
+		Return;
+		}
+	else
+		{
+		Return;
+		}
+	}
+
+SetThingUserData(door, health - damage);
+Return;
+end
+
+
