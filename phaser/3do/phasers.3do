@@ -1,0 +1,96 @@
+# MODEL C:\Program Files\LucasArts\Jedi Knight\Thrawn\3do\phasers.3do created by JED 0.85 beta
+
+SECTION: HEADER
+
+3DO 2.1
+
+SECTION: MODELRESOURCE
+
+MATERIALS 1
+0: saberorange1.mat
+
+SECTION: GEOMETRYDEF
+
+RADIUS .192581
+
+INSERT OFFSET 0 0 0
+
+GEOSETS 1
+
+GEOSET 0
+
+MESHES 1
+
+MESH 0
+NAME phasers0
+RADIUS .192581
+GEOMETRYMODE	4
+LIGHTINGMODE	3
+TEXTUREMODE	1
+
+VERTICES 8
+
+0: .005 -.1925 .0025 0
+1: -.005 -.1925 .0025 0
+2: .005 -.1925 -.0025 0
+3: -.005 -.1925 -.0025 0
+4: .005 .1925 .0025 0
+5: -.005 .1925 .0025 0
+6: .005 .1925 -.0025 0
+7: -.005 .1925 -.0025 0
+
+TEXTURE VERTICES 18
+
+0: 190.84 -143.8
+1: 187.63 -143.8
+2: 187.63 -142.2
+3: 190.83 -142.2
+4: 190.8 -19
+5: 187.6 -19
+6: 186.04 -142.2
+7: 186 -19
+8: 187.64 -142.2
+9: 192.21 -142.2
+10: 192.17 -19
+11: 193.77 -19
+12: 193.8 -142.2
+13: 193.8 -142.2
+14: 196.97 -19
+15: 197 -142.2
+16: 187.6 -17.4
+17: 190.8 -17.4
+
+VERTEX NORMALS
+
+0: .333333 -.333333 .333333
+1: -.333333 -.333333 .333333
+2: .333333 -.333333 -.333333
+3: -.333333 -.333333 -.333333
+4: .333333 .333333 .333333
+5: -.333333 .333333 .333333
+6: .333333 .333333 -.333333
+7: -.333333 .333333 -.333333
+
+FACES 6
+
+0: 0 0x0 4 3 1 0 4 3, 0 2, 1 0, 2 1, 3
+1: 0 0x0 4 3 1 0 4 5, 4 1, 3 0, 2 4, 5
+2: 0 0x0 4 3 1 0 4 2, 6 6, 7 4, 5 0, 8
+3: 0 0x0 4 3 1 0 4 1, 9 5, 10 7, 11 3, 12
+4: 0 0x0 4 3 1 0 4 3, 13 7, 11 6, 14 2, 15
+5: 0 0x0 4 3 1 0 4 6, 16 7, 17 5, 4 4, 5
+
+FACE NORMALS
+
+0: 0 -1 0
+1: 0 0 1
+2: 1 0 0
+3: -1 0 0
+4: 0 0 -1
+5: 0 1 0
+
+SECTION: HIERARCHYDEF
+
+HIERARCHY NODES 1
+# num: flags: type: mesh: parent: child:  sibling:  numChildren: x: y: z: pitch: yaw: roll: pivotx: pivoty: pivotz: hnodename:
+0:     0x0    0x1   0     -1      -1      -1        0            0  0  0  0.0    0.0  0.0   0.0     0.0    0.0     phasers0

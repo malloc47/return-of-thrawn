@@ -1,0 +1,5 @@
+Name=Phaser
+Type=Weapon
+Description=This is the phaser weapon taken directly from the SP level, The Return of Thrawn.
+Author=Jarrell Waggoner
+Email=malloc47@gmail.com

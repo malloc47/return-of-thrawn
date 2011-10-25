@@ -1,0 +1,198 @@
+#********** World file D:\jedi\Products\JK\Release\Jkl\static.jkl ***** Created 10/30/1996 6:32pm **********
+
+#### Copyright information #####
+SECTION: COPYRIGHT
+................................
+................@...@...@...@...
+.............@...@..@..@...@....
+................@.@.@.@.@.@.....
+@@@@@@@@......@...........@.....
+@@@@@@@@....@@......@@@....@....
+@@.....@.....@......@@@.....@@..
+@@.@@@@@......@.....@@@......@@.
+@@@@@@@@.......@....@@.....@@...
+@@@@@@@@.........@@@@@@@@@@.....
+@@@@@@@@..........@@@@@@........
+@@.....@..........@@@@@.........
+@@.@@@@@.........@@@@@@.........
+@@.....@.........@@@@@@.........
+@@@@@@@@.........@@@@@@.........
+@@@@@@@@.........@@@@@@@........
+@@@...@@.........@@@@@@@........
+@@.@@@.@.........@.....@........
+@@..@..@........@.......@.......
+@@@@@@@@........@.......@.......
+@@@@@@@@.......@........@.......
+@@..@@@@.......@........@.......
+@@@@..@@......@.........@.......
+@@@@.@.@......@.........@.......
+@@....@@........................
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@.@@@@@@@@@@@@@@@@@@
+@@.@@..@@@@@..@@@@@@@@@@.@@@@@@@
+@@.@.@.@@@@.@.@@@.@..@@...@@@..@
+@@..@@@@@@....@@@..@@@@@.@@@@.@@
+@@@@@@@@...@@.@@@.@@@@@..@@...@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@.copyright.(c).1997.lucasarts.@
+@@@@@@..entertainment.co..@@@@@@
+################################
+
+
+###### Header information ######
+SECTION: HEADER
+# version and global constant settings
+Version 1
+World Gravity 4.00
+Ceiling Sky Z    3.000000
+Horizon Distance 100.000000
+Horizon Pixels per Rev 768.000000
+Horizon Sky Offset   0.000000 0.000000
+Ceiling Sky Offset   0.000000 0.000000
+MipMap Distances	1.000000	2.000000	3.000000	4.000000
+LOD Distances		0.300000	0.600000	0.900000	1.200000
+Perspective distance 2.00
+Gouraud distance 2.00
+################################
+
+
+###### Sound information  ######
+SECTION: SOUNDS
+World sounds 60
+end
+################################
+
+
+##### Material information #####
+SECTION: MATERIALS
+World materials 160
+#0:	00explosion.mat
+#1:	dusty.mat
+end
+################################
+
+
+Section: Soundclass
+World soundclasses 4
+0:	ky.snd
+1:    exp_laserhit.snd
+2:    bry.snd
+3:    exp_det.snd
+end
+
+###### Models information ######
+Section: MODELS
+
+World models 38
+
+0:	bryv.3do
+1:	bryg.3do
+2:	sabv.3do
+3:	sabg.3do
+4:	rldv.3do
+5;	rldg.3do
+6:	conv.3do
+7:	cong.3do
+8:	strv.3do
+9:	strg.3do
+10: rptv.3do
+11: rptg.3do
+12: detv.3do
+13: detg.3do
+14: seqv.3do
+15: seqg.3do
+16: fistv.3do
+17: fistg.3do
+18: bowv.3do
+19: bowg.3do
+20: ky.3do
+21: bry0.3do
+22: con0.3do
+23: dflt.3do
+24: rep0.3do
+25: det0.3do
+26: seqp.3do
+27: rld0.3do
+28: phasers.3do
+28: phasers2.3do
+29: phyg.3do 
+30: phyv.3do 
+
+
+end
+################################
+
+
+###### Sprite information ######
+Section: SPRITES
+
+World sprites 20
+0: bryx.spr
+1: detx.spr
+2: bowx2.spr
+3: bowx.spr
+4: rptx.spr
+5: seqx2.spr
+6: debrisx.spr
+7: rldx.spr
+8: conx.spr
+end
+################################
+
+
+##### Keyframe information #####
+Section: KEYFRAMES
+
+World keyframes 128
+end
+################################
+
+
+###### Animation Classes #######
+Section: ANIMCLASS
+
+World puppets 16
+0:	ky.pup
+end
+################################
+
+
+########## COG scripts #########
+Section: cogscripts
+World scripts 50
+
+end
+################################
+
+
+######### COG placement ########
+Section: cogs
+World cogs 50
+#Num	Script          Symbol values
+end
+################################
+
+##### Templates information ####
+# Attention COG programmers; Please add on to the templates below, DO NOT ERASE THEM unless
+# they interfer or duplicate the function of your patch. It will make using different patches
+# much easier on the end user. (Morpy - mnelson@mnsi.net)
+Section: TEMPLATES
+
+World templates 13
+
+#Name:           Based On:        Params:
+_explosion2       none               orient=(0.000000/0.000000/0.000000) type=explosion typeflags=0x1 damageclass=0x4
+_blowup           none               orient=(0.000000/0.000000/0.000000) type=explosion typeflags=0x1 damageclass=0x4
+_weapon           none               orient=(0.000000/0.000000/0.000000) type=weapon collide=1 move=physics thingflags=0x20000000 timer=10.000000 mass=5.000000 physflags=0x200 maxrotvel=90.000000 damageclass=0x2 typeflags=0x1
+_weapon2          none               orient=(0.000000/0.000000/0.000000) type=weapon collide=1 move=physics thingflags=0x20000000 timer=10.000000 mass=5.000000 physflags=0x200 maxrotvel=90.000000 damageclass=0x2 typeflags=0x1
++whitecloud       none               orient=(0.000000/0.000000/0.000000) type=particle timer=0.200000 typeflags=0x3f material=00gsmoke.mat range=0.020000 rate=128.000000 maxthrust=30.000000 elementsize=0.007000 count=128
++dustcloud        +whitecloud        timer=0.120000 material=dusty.mat range=0.015000 rate=256.000000 maxthrust=80.000000 elementsize=0.010000
++newcloud         +dustcloud         material=00explosion.mat range=0.050000 rate=256.000000 maxthrust=80.000000 count=256
++base_exp         _blowup            thingflags=0x1 light=0.200000 timer=0.800000 sprite=detx.spr soundclass=exp_det.snd creatething=+newcloud typeflags=0x17 damage=75.000000 blasttime=0.700000 force=100.000000 maxlight=0.800000 range=0.450000
++laserhit         _explosion2         thingflags=0x1 light=0.200000 timer=0.500000 sprite=bryx.spr soundclass=exp_laserhit.snd typeflags=0x33 blasttime=0.300000 maxlight=0.400000
++phaser_exp       +base_exp          type=explosion typeflags=0x45 sprite=debrisx.spr soundclass=exp_det.snd damage=1.000000 force=150.000000 range=-1.00000
++light            _blowup            thingflags=0x1 light=0.400000 timer=0.100000 typeflags=0x0
++phaserbolt       _weapon            thingflags=0x20000001 light=0.900000 model3d=phasers.3do size=0.002000 movesize=0.002000 soundclass=bry.snd creatething=+light maxrotvel=0.000000 vel=(0.000000/4.000000/0.000000) explode=+phaser_exp fleshhit=+laserhit damage=110.000000 mindamage=110.000000 typeflags=0x20440d rate=80.000000 yawrange=180 pitchrange=180
++phaserbolt2      _weapon            thingflags=0x20000001 light=0.900000 model3d=phasers2.3do size=0.002000 movesize=0.002000 soundclass=bry.snd creatething=+light maxrotvel=0.000000 vel=(0.000000/4.000000/0.000000) explode=+laserhit fleshhit=+laserhit damage=35.00000 mindamage=35.000000 typeflags=0x20440d rate=80.000000
+end
+################################
